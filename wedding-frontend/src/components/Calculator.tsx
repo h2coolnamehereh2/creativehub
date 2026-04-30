@@ -1,329 +1,665 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { Calendar, Check, RotateCcw, ChevronDown, ChevronUp } from 'lucide-react';
-import { FadeInUp, SlideInLeft, SlideInRight } from './ScrollAnimations';
-import { fetchDates, type DateInfo } from '@/lib/api';
+import { useState, useMemo, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Camera, Video, RotateCcw, Info, Check, Calendar } from 'lucide-react';
+import { FadeInUp } from './ScrollAnimations';
 
-interface Service {
-  id: string;
-  name: string;
+type ServiceType = 'photo-video' | 'photo' | 'video' | null;
+type CeremonyType = 'no' | 'photo-video' | 'photo' | 'video';
+
+interface RadioOption<T extends string | number = string | number> {
+  label: string;
+  value: T;
   price: number;
 }
 
-interface Package {
-  name: string;
-  services: string[];
-  discount: number;
+interface ToggleOption {
+  id: string;
+  label: string;
+  price: number;
 }
 
-const services: Service[] = [
-  { id: 'photo', name: 'Фотография', price: 800 },
-  { id: 'video', name: 'Видеография', price: 1200 },
-  { id: 'drone', name: 'Дрон заснемане', price: 300 },
-  { id: 'booth', name: 'Фотобудка', price: 400 },
-  { id: 'album', name: 'Фотоалбум', price: 250 },
-  { id: 'express', name: 'Експресна обработка', price: 200 },
+// ─── Option Data ────────────────────────────────────────────
+
+const photographerOptions: RadioOption<number>[] = [
+  { label: 'Един фотограф', value: 1, price: 0 },
+  { label: 'Двама фотографи', value: 2, price: 400 },
 ];
 
-const packages: Package[] = [
-  { name: 'Сребърен', services: ['photo'], discount: 0 },
-  { name: 'Златен', services: ['photo', 'video'], discount: 100 },
-  { name: 'Диамантен', services: ['photo', 'video', 'drone', 'album'], discount: 300 },
+const shootingTimeOptions: RadioOption<number>[] = [
+  { label: 'до 7 часа', value: 7, price: 0 },
+  { label: 'до 8 часа', value: 8, price: 150 },
+  { label: 'до 9 часа', value: 9, price: 300 },
+  { label: 'до 10 часа', value: 10, price: 450 },
+];
+
+const photoEditingOptions: RadioOption<string>[] = [
+  { label: 'Всички сортирани снимки с основна корекция', value: 'basic', price: 0 },
+  { label: '+20 снимки с индивидуална обработка', value: '20', price: 100 },
+  { label: '+40 снимки с индивидуална обработка', value: '40', price: 180 },
+  { label: '+60 снимки с индивидуална обработка', value: '60', price: 250 },
+  { label: '+80 снимки с индивидуална обработка', value: '80', price: 300 },
+];
+
+const photoDeliveryOptions: RadioOption<number>[] = [
+  { label: 'до 60 дни', value: 60, price: 0 },
+  { label: 'до 30 дни', value: 30, price: 150 },
+  { label: 'до 7 дни', value: 7, price: 350 },
+];
+
+const videographerOptions: RadioOption<number>[] = [
+  { label: 'Един видеограф', value: 1, price: 0 },
+  { label: 'Двама видеографи', value: 2, price: 400 },
+];
+
+const videoQualityOptions: RadioOption<string>[] = [
+  { label: 'FULL HD', value: 'fullhd', price: 0 },
+  { label: '4K', value: '4k', price: 200 },
+];
+
+const filmLengthOptions: RadioOption<number>[] = [
+  { label: '60 минути', value: 60, price: 0 },
+  { label: '90 минути', value: 90, price: 150 },
+  { label: '120 минути', value: 120, price: 250 },
+  { label: '180 минути', value: 180, price: 400 },
+];
+
+const equipmentOptions: ToggleOption[] = [
+  { id: 'gimbal', label: 'Стабилизатор (Gimbal)', price: 100 },
+  { id: 'audio', label: 'Аудио пакет', price: 150 },
+  { id: 'teaser', label: 'Сватбен тийзър', price: 200 },
+  { id: 'highlight', label: 'Сватбен хайлайт трейлър', price: 300 },
+  { id: 'tiktok', label: 'Видео формат TikTok / Reel', price: 100 },
+  { id: 'drone', label: 'Въздушни кадри с дрон', price: 250 },
+  { id: 'lighting', label: 'Осветителен пакет', price: 200 },
+  { id: 'car', label: 'Кадри от движещ се автомобил', price: 300 },
+];
+
+const videoDeliveryOptions: RadioOption<number>[] = [
+  { label: 'до 180 дни', value: 180, price: 0 },
+  { label: 'до 120 дни', value: 120, price: 100 },
+  { label: 'до 90 дни', value: 90, price: 200 },
+];
+
+const revisionOptions: RadioOption<number>[] = [
+  { label: 'Една безплатна ревизия', value: 1, price: 0 },
+  { label: 'Втора ревизия', value: 2, price: 50 },
+  { label: 'Трета ревизия', value: 3, price: 100 },
+];
+
+const ceremonyPhotoTimeOptions: RadioOption<number>[] = [
+  { label: '2 часа', value: 2, price: 200 },
+  { label: '3 часа', value: 3, price: 300 },
+  { label: '4 часа', value: 4, price: 400 },
+];
+
+const ceremonyVideoTimeOptions: RadioOption<number>[] = [
+  { label: '2 часа', value: 2, price: 250 },
+  { label: '3 часа', value: 3, price: 350 },
+  { label: '4 часа', value: 4, price: 450 },
+];
+
+// ─── Helper Components ──────────────────────────────────────
+
+function RadioGroup<T extends string | number>({
+  title,
+  options,
+  value,
+  onChange,
+}: {
+  title: string;
+  options: RadioOption<T>[];
+  value: T;
+  onChange: (v: T) => void;
+}) {
+  return (
+    <div className="mb-6">
+      <h4 className="text-sm font-medium text-dark-400 uppercase tracking-wider mb-3">{title}</h4>
+      <div className="space-y-2">
+        {options.map((opt) => (
+          <button
+            key={String(opt.value)}
+            type="button"
+            onClick={() => onChange(opt.value)}
+            className={`w-full flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all text-left ${
+              value === opt.value
+                ? 'bg-primary-500/10 border border-primary-500/30'
+                : 'bg-dark-800/50 hover:bg-dark-800 border border-transparent'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div
+                className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${
+                  value === opt.value ? 'border-primary-500' : 'border-dark-600'
+                }`}
+              >
+                {value === opt.value && <div className="w-2 h-2 rounded-full bg-primary-500" />}
+              </div>
+              <span className={`text-sm ${value === opt.value ? 'text-dark-100' : 'text-dark-300'}`}>
+                {opt.label}
+              </span>
+            </div>
+            <span
+              className={`text-sm font-medium whitespace-nowrap ml-4 ${
+                opt.price > 0 ? 'text-primary-400' : 'text-dark-500'
+              }`}
+            >
+              {opt.price > 0 ? `+${opt.price}€` : 'включено'}
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CheckboxGroup({
+  title,
+  options,
+  selected,
+  onToggle,
+}: {
+  title: string;
+  options: ToggleOption[];
+  selected: Set<string>;
+  onToggle: (id: string) => void;
+}) {
+  return (
+    <div className="mb-6">
+      <h4 className="text-sm font-medium text-dark-400 uppercase tracking-wider mb-3">{title}</h4>
+      <div className="space-y-2">
+        {options.map((opt) => (
+          <button
+            key={opt.id}
+            type="button"
+            onClick={() => onToggle(opt.id)}
+            className={`w-full flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all text-left ${
+              selected.has(opt.id)
+                ? 'bg-primary-500/10 border border-primary-500/30'
+                : 'bg-dark-800/50 hover:bg-dark-800 border border-transparent'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div
+                className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0 ${
+                  selected.has(opt.id)
+                    ? 'bg-primary-500 border-primary-500'
+                    : 'border-dark-600'
+                }`}
+              >
+                {selected.has(opt.id) && <Check size={12} className="text-dark-950" />}
+              </div>
+              <span className={`text-sm ${selected.has(opt.id) ? 'text-dark-100' : 'text-dark-300'}`}>
+                {opt.label}
+              </span>
+            </div>
+            <span className="text-sm font-medium text-primary-400 whitespace-nowrap ml-4">
+              +{opt.price}€
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Main Component ─────────────────────────────────────────
+
+const serviceTypeCards: {
+  type: NonNullable<ServiceType>;
+  label: string;
+  description: string;
+  icons: typeof Camera[];
+}[] = [
+  {
+    type: 'photo-video',
+    label: 'Снимки и Видео',
+    description: 'Пълен пакет с фотография и видеография',
+    icons: [Camera, Video],
+  },
+  {
+    type: 'photo',
+    label: 'Само Снимки',
+    description: 'Професионална сватбена фотография',
+    icons: [Camera],
+  },
+  {
+    type: 'video',
+    label: 'Само Видео',
+    description: 'Професионална сватбена видеография',
+    icons: [Video],
+  },
 ];
 
 export default function Calculator() {
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [dateInfo, setDateInfo] = useState<DateInfo>({ bookedDates: [], lastAvailableDates: [] });
-  const [expandedMonths, setExpandedMonths] = useState<Set<string>>(new Set());
+  const [serviceType, setServiceType] = useState<ServiceType>(null);
+
+  const [photographers, setPhotographers] = useState(1);
+  const [shootingTime, setShootingTime] = useState(7);
+  const [photoEditing, setPhotoEditing] = useState('basic');
+  const [photoDelivery, setPhotoDelivery] = useState(60);
+
+  const [videographers, setVideographers] = useState(1);
+  const [videoQuality, setVideoQuality] = useState('fullhd');
+  const [filmLength, setFilmLength] = useState(60);
+  const [additionalEquipment, setAdditionalEquipment] = useState<Set<string>>(new Set());
+  const [videoDelivery, setVideoDelivery] = useState(180);
+  const [revisions, setRevisions] = useState(1);
+
+  const [ceremony, setCeremony] = useState<CeremonyType>('no');
+  const [ceremonyPhotoTime, setCeremonyPhotoTime] = useState(2);
+  const [ceremonyVideoTime, setCeremonyVideoTime] = useState(2);
+
+  const showPhoto = serviceType === 'photo-video' || serviceType === 'photo';
+  const showVideo = serviceType === 'photo-video' || serviceType === 'video';
 
   useEffect(() => {
-    async function loadDates() {
-      const data = await fetchDates();
-      setDateInfo(data);
+    if (serviceType === 'photo' && (ceremony === 'photo-video' || ceremony === 'video')) {
+      setCeremony('no');
     }
-    loadDates();
-  }, []);
+    if (serviceType === 'video' && (ceremony === 'photo-video' || ceremony === 'photo')) {
+      setCeremony('no');
+    }
+  }, [serviceType, ceremony]);
 
-  // Calculate total price
+  const ceremonyOptions = useMemo((): RadioOption<string>[] => {
+    const opts: RadioOption<string>[] = [{ label: 'Не', value: 'no', price: 0 }];
+    if (showPhoto && showVideo) {
+      opts.push({ label: 'Снимки и Видео', value: 'photo-video', price: 0 });
+    }
+    if (showPhoto) {
+      opts.push({ label: 'Само снимки', value: 'photo', price: 0 });
+    }
+    if (showVideo) {
+      opts.push({ label: 'Само видео', value: 'video', price: 0 });
+    }
+    return opts;
+  }, [showPhoto, showVideo]);
+
   const totalPrice = useMemo(() => {
-    const servicesTotal = services
-      .filter((s) => selectedServices.includes(s.id))
-      .reduce((sum, s) => sum + s.price, 0);
+    if (!serviceType) return 0;
+    let total = 0;
 
-    // Find applicable package discount
-    const applicablePackage = packages
-      .filter((pkg) => pkg.services.every((s) => selectedServices.includes(s)))
-      .sort((a, b) => b.discount - a.discount)[0];
-
-    const discount = applicablePackage?.discount || 0;
-    return servicesTotal - discount;
-  }, [selectedServices]);
-
-  // Toggle service selection
-  const toggleService = (serviceId: string) => {
-    setSelectedServices((prev) =>
-      prev.includes(serviceId)
-        ? prev.filter((id) => id !== serviceId)
-        : [...prev, serviceId]
-    );
-  };
-
-  // Apply package preset
-  const applyPackage = (pkg: Package) => {
-    setSelectedServices(pkg.services);
-  };
-
-  // Reset calculator
-  const reset = () => {
-    setSelectedServices([]);
-    setSelectedDate(null);
-  };
-
-  // Generate calendar months
-  const calendarMonths = useMemo(() => {
-    const months = [];
-    const now = new Date();
-    for (let i = 0; i < 4; i++) {
-      const date = new Date(now.getFullYear(), now.getMonth() + i, 1);
-      months.push({
-        key: `${date.getFullYear()}-${date.getMonth()}`,
-        year: date.getFullYear(),
-        month: date.getMonth(),
-        label: date.toLocaleDateString('bg-BG', { month: 'long', year: 'numeric' }),
-      });
+    if (showPhoto) {
+      total += photographerOptions.find((o) => o.value === photographers)?.price ?? 0;
+      total += shootingTimeOptions.find((o) => o.value === shootingTime)?.price ?? 0;
+      total += photoEditingOptions.find((o) => o.value === photoEditing)?.price ?? 0;
+      total += photoDeliveryOptions.find((o) => o.value === photoDelivery)?.price ?? 0;
     }
-    return months;
-  }, []);
 
-  // Toggle month expansion
-  const toggleMonth = (monthKey: string) => {
-    setExpandedMonths((prev) => {
+    if (showVideo) {
+      total += videographerOptions.find((o) => o.value === videographers)?.price ?? 0;
+      total += videoQualityOptions.find((o) => o.value === videoQuality)?.price ?? 0;
+      total += filmLengthOptions.find((o) => o.value === filmLength)?.price ?? 0;
+      additionalEquipment.forEach((id) => {
+        total += equipmentOptions.find((o) => o.id === id)?.price ?? 0;
+      });
+      total += videoDeliveryOptions.find((o) => o.value === videoDelivery)?.price ?? 0;
+      total += revisionOptions.find((o) => o.value === revisions)?.price ?? 0;
+    }
+
+    if (ceremony === 'photo-video' || ceremony === 'photo') {
+      total += ceremonyPhotoTimeOptions.find((o) => o.value === ceremonyPhotoTime)?.price ?? 0;
+    }
+    if (ceremony === 'photo-video' || ceremony === 'video') {
+      total += ceremonyVideoTimeOptions.find((o) => o.value === ceremonyVideoTime)?.price ?? 0;
+    }
+
+    return total;
+  }, [
+    serviceType, showPhoto, showVideo,
+    photographers, shootingTime, photoEditing, photoDelivery,
+    videographers, videoQuality, filmLength, additionalEquipment, videoDelivery, revisions,
+    ceremony, ceremonyPhotoTime, ceremonyVideoTime,
+  ]);
+
+  const priceBreakdown = useMemo(() => {
+    const items: { label: string; price: number }[] = [];
+    if (!serviceType) return items;
+
+    if (showPhoto) {
+      const p = photographerOptions.find((o) => o.value === photographers);
+      if (p && p.price > 0) items.push({ label: p.label, price: p.price });
+      const st = shootingTimeOptions.find((o) => o.value === shootingTime);
+      if (st && st.price > 0) items.push({ label: `Снимки ${st.label}`, price: st.price });
+      const pe = photoEditingOptions.find((o) => o.value === photoEditing);
+      if (pe && pe.price > 0) items.push({ label: pe.label, price: pe.price });
+      const pd = photoDeliveryOptions.find((o) => o.value === photoDelivery);
+      if (pd && pd.price > 0) items.push({ label: `Доставка снимки ${pd.label}`, price: pd.price });
+    }
+
+    if (showVideo) {
+      const v = videographerOptions.find((o) => o.value === videographers);
+      if (v && v.price > 0) items.push({ label: v.label, price: v.price });
+      const vq = videoQualityOptions.find((o) => o.value === videoQuality);
+      if (vq && vq.price > 0) items.push({ label: vq.label, price: vq.price });
+      const fl = filmLengthOptions.find((o) => o.value === filmLength);
+      if (fl && fl.price > 0) items.push({ label: `Филм ${fl.label}`, price: fl.price });
+      additionalEquipment.forEach((id) => {
+        const eq = equipmentOptions.find((o) => o.id === id);
+        if (eq) items.push({ label: eq.label, price: eq.price });
+      });
+      const vd = videoDeliveryOptions.find((o) => o.value === videoDelivery);
+      if (vd && vd.price > 0) items.push({ label: `Доставка видео ${vd.label}`, price: vd.price });
+      const rv = revisionOptions.find((o) => o.value === revisions);
+      if (rv && rv.price > 0) items.push({ label: rv.label, price: rv.price });
+    }
+
+    if (ceremony === 'photo-video' || ceremony === 'photo') {
+      const cpt = ceremonyPhotoTimeOptions.find((o) => o.value === ceremonyPhotoTime);
+      if (cpt) items.push({ label: `Церемония снимки ${cpt.label}`, price: cpt.price });
+    }
+    if (ceremony === 'photo-video' || ceremony === 'video') {
+      const cvt = ceremonyVideoTimeOptions.find((o) => o.value === ceremonyVideoTime);
+      if (cvt) items.push({ label: `Церемония видео ${cvt.label}`, price: cvt.price });
+    }
+
+    return items;
+  }, [
+    serviceType, showPhoto, showVideo,
+    photographers, shootingTime, photoEditing, photoDelivery,
+    videographers, videoQuality, filmLength, additionalEquipment, videoDelivery, revisions,
+    ceremony, ceremonyPhotoTime, ceremonyVideoTime,
+  ]);
+
+  const toggleEquipment = (id: string) => {
+    setAdditionalEquipment((prev) => {
       const next = new Set(prev);
-      if (next.has(monthKey)) {
-        next.delete(monthKey);
-      } else {
-        next.add(monthKey);
-      }
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       return next;
     });
   };
 
-  // Get weekends for a month
-  const getWeekends = (year: number, month: number) => {
-    const weekends = [];
-    const date = new Date(year, month, 1);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    while (date.getMonth() === month) {
-      const day = date.getDay();
-      if (day === 0 || day === 6) {
-        const dateStr = date.toISOString().split('T')[0];
-        const isPast = date < today;
-        const isBooked = dateInfo.bookedDates.includes(dateStr);
-        const isLastAvailable = dateInfo.lastAvailableDates.includes(dateStr);
-
-        weekends.push({
-          date: dateStr,
-          day: date.getDate(),
-          dayName: date.toLocaleDateString('bg-BG', { weekday: 'short' }),
-          isPast,
-          isBooked,
-          isLastAvailable,
-          isSelected: selectedDate === dateStr,
-        });
-      }
-      date.setDate(date.getDate() + 1);
-    }
-    return weekends;
+  const reset = () => {
+    setServiceType(null);
+    setPhotographers(1);
+    setShootingTime(7);
+    setPhotoEditing('basic');
+    setPhotoDelivery(60);
+    setVideographers(1);
+    setVideoQuality('fullhd');
+    setFilmLength(60);
+    setAdditionalEquipment(new Set());
+    setVideoDelivery(180);
+    setRevisions(1);
+    setCeremony('no');
+    setCeremonyPhotoTime(2);
+    setCeremonyVideoTime(2);
   };
 
   return (
     <section id="calculator" className="section-padding bg-dark-950">
       <div className="container-width">
-        {/* Section Header */}
         <FadeInUp className="text-center mb-16">
           <span className="text-primary-400 font-medium text-sm uppercase tracking-wider">
             Планирайте бюджета си
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-dark-50 mt-4 mb-6">
-            Калкулатор
+            Ценова листа
           </h2>
           <p className="text-dark-400 max-w-2xl mx-auto">
-            Изберете услуги и дата, за да получите ориентировъчна цена.
+            Изберете тип услуга и конфигурирайте опциите, за да получите ориентировъчна цена.
           </p>
         </FadeInUp>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Services & Packages */}
-          <SlideInLeft>
-            <div className="glass rounded-2xl p-6 md:p-8">
-              <h3 className="text-xl font-semibold text-dark-50 mb-6 flex items-center gap-2">
-                <Check className="text-primary-400" size={20} />
-                Изберете услуги
+        {/* Service Type Selector */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+          {serviceTypeCards.map(({ type, label, description, icons }) => (
+            <motion.button
+              key={type}
+              type="button"
+              onClick={() => setServiceType(type)}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className={`p-6 rounded-2xl text-left transition-all ${
+                serviceType === type
+                  ? 'bg-primary-500/10 border-2 border-primary-500/50 shadow-lg shadow-primary-500/10'
+                  : 'glass border-2 border-transparent hover:border-dark-700'
+              }`}
+            >
+              <div className="flex gap-2">
+                {icons.map((Icon, i) => (
+                  <Icon
+                    key={i}
+                    size={28}
+                    className={serviceType === type ? 'text-primary-400' : 'text-dark-500'}
+                  />
+                ))}
+              </div>
+              <h3
+                className={`text-lg font-semibold mt-3 ${
+                  serviceType === type ? 'text-primary-400' : 'text-dark-200'
+                }`}
+              >
+                {label}
               </h3>
+              <p className="text-dark-500 text-sm mt-1">{description}</p>
+            </motion.button>
+          ))}
+        </div>
 
-              {/* Service Checkboxes */}
-              <div className="space-y-3 mb-8">
-                {services.map((service) => (
-                  <label
-                    key={service.id}
-                    className="flex items-center justify-between p-3 rounded-xl bg-dark-800/50 hover:bg-dark-800 cursor-pointer transition-colors group"
+        {/* Options & Summary */}
+        <AnimatePresence>
+          {serviceType && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="grid lg:grid-cols-[1fr,340px] gap-8 items-start"
+            >
+              {/* Options Column */}
+              <div className="space-y-6">
+                {/* Photo Options */}
+                {showPhoto && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="glass rounded-2xl p-6 md:p-8"
                   >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
-                          selectedServices.includes(service.id)
-                            ? 'bg-primary-500 border-primary-500'
-                            : 'border-dark-600 group-hover:border-dark-500'
-                        }`}
-                      >
-                        {selectedServices.includes(service.id) && (
-                          <Check size={12} className="text-dark-950" />
-                        )}
-                      </div>
-                      <span className="text-dark-200">{service.name}</span>
-                    </div>
-                    <span className="text-dark-400 font-medium">{service.price} лв.</span>
-                    <input
-                      type="checkbox"
-                      checked={selectedServices.includes(service.id)}
-                      onChange={() => toggleService(service.id)}
-                      className="sr-only"
+                    <h3 className="text-lg font-semibold text-dark-50 mb-6 flex items-center gap-2">
+                      <Camera className="text-primary-400" size={20} />
+                      Фотография
+                    </h3>
+
+                    <RadioGroup
+                      title="Брой фотографи"
+                      options={photographerOptions}
+                      value={photographers}
+                      onChange={setPhotographers}
                     />
-                  </label>
-                ))}
-              </div>
+                    <RadioGroup
+                      title="Продължителност на снимките"
+                      options={shootingTimeOptions}
+                      value={shootingTime}
+                      onChange={setShootingTime}
+                    />
+                    <RadioGroup
+                      title="Обработка на снимки"
+                      options={photoEditingOptions}
+                      value={photoEditing}
+                      onChange={setPhotoEditing}
+                    />
 
-              {/* Package Presets */}
-              <h4 className="text-sm font-medium text-dark-400 mb-3">Готови пакети</h4>
-              <div className="flex flex-wrap gap-2">
-                {packages.map((pkg) => (
-                  <motion.button
-                    key={pkg.name}
-                    onClick={() => applyPackage(pkg)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="px-4 py-2 rounded-lg bg-dark-800 text-dark-300 hover:text-primary-400 hover:bg-dark-700 transition-colors text-sm"
+                    <div className="flex gap-3 p-4 rounded-xl bg-dark-800/70 border border-dark-700/50 mb-6">
+                      <Info size={18} className="text-primary-400 flex-shrink-0 mt-0.5" />
+                      <p className="text-xs text-dark-400 leading-relaxed">
+                        Индивидуалната обработка включва ретуширане на кожата, премахване на дребни
+                        несъвършенства, избелване на зъби, усъвършенствано маскиране на светлината и
+                        професионален цветови грейдинг.
+                      </p>
+                    </div>
+
+                    <RadioGroup
+                      title="Срок за доставка на снимки"
+                      options={photoDeliveryOptions}
+                      value={photoDelivery}
+                      onChange={setPhotoDelivery}
+                    />
+                  </motion.div>
+                )}
+
+                {/* Video Options */}
+                {showVideo && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="glass rounded-2xl p-6 md:p-8"
                   >
-                    {pkg.name}
-                    {pkg.discount > 0 && (
-                      <span className="ml-2 text-green-400">-{pkg.discount} лв.</span>
+                    <h3 className="text-lg font-semibold text-dark-50 mb-6 flex items-center gap-2">
+                      <Video className="text-primary-400" size={20} />
+                      Видеография
+                    </h3>
+
+                    <RadioGroup
+                      title="Брой видеографи"
+                      options={videographerOptions}
+                      value={videographers}
+                      onChange={setVideographers}
+                    />
+                    <RadioGroup
+                      title="Качество на видеото"
+                      options={videoQualityOptions}
+                      value={videoQuality}
+                      onChange={setVideoQuality}
+                    />
+                    <RadioGroup
+                      title="Продължителност на филма"
+                      options={filmLengthOptions}
+                      value={filmLength}
+                      onChange={setFilmLength}
+                    />
+                    <CheckboxGroup
+                      title="Допълнително оборудване и опции"
+                      options={equipmentOptions}
+                      selected={additionalEquipment}
+                      onToggle={toggleEquipment}
+                    />
+                    <RadioGroup
+                      title="Срок за доставка на видео"
+                      options={videoDeliveryOptions}
+                      value={videoDelivery}
+                      onChange={setVideoDelivery}
+                    />
+                    <RadioGroup
+                      title="Брой ревизии"
+                      options={revisionOptions}
+                      value={revisions}
+                      onChange={setRevisions}
+                    />
+                  </motion.div>
+                )}
+
+                {/* Ceremony Options */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="glass rounded-2xl p-6 md:p-8"
+                >
+                  <h3 className="text-lg font-semibold text-dark-50 mb-6 flex items-center gap-2">
+                    <Calendar className="text-primary-400" size={20} />
+                    Заснемане на церемония в отделен ден
+                  </h3>
+
+                  <RadioGroup
+                    title="Церемония"
+                    options={ceremonyOptions}
+                    value={ceremony}
+                    onChange={(v) => setCeremony(v as CeremonyType)}
+                  />
+
+                  <AnimatePresence>
+                    {(ceremony === 'photo-video' || ceremony === 'photo') && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <RadioGroup
+                          title="Продължителност на фотозаснемане на церемонията"
+                          options={ceremonyPhotoTimeOptions}
+                          value={ceremonyPhotoTime}
+                          onChange={setCeremonyPhotoTime}
+                        />
+                      </motion.div>
                     )}
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-          </SlideInLeft>
+                  </AnimatePresence>
 
-          {/* Calendar & Total */}
-          <SlideInRight>
-            <div className="glass rounded-2xl p-6 md:p-8">
-              <h3 className="text-xl font-semibold text-dark-50 mb-6 flex items-center gap-2">
-                <Calendar className="text-primary-400" size={20} />
-                Изберете дата
-              </h3>
-
-              {/* Calendar */}
-              <div className="space-y-2 mb-8 max-h-64 overflow-y-auto">
-                {calendarMonths.map((month) => (
-                  <div key={month.key} className="rounded-xl bg-dark-800/50 overflow-hidden">
-                    <button
-                      onClick={() => toggleMonth(month.key)}
-                      className="w-full flex items-center justify-between p-3 hover:bg-dark-800 transition-colors"
-                    >
-                      <span className="text-dark-200 capitalize">{month.label}</span>
-                      {expandedMonths.has(month.key) ? (
-                        <ChevronUp size={18} className="text-dark-400" />
-                      ) : (
-                        <ChevronDown size={18} className="text-dark-400" />
-                      )}
-                    </button>
-
-                    {expandedMonths.has(month.key) && (
-                      <div className="p-3 pt-0 flex flex-wrap gap-2">
-                        {getWeekends(month.year, month.month).map((weekend) => (
-                          <button
-                            key={weekend.date}
-                            onClick={() => !weekend.isPast && !weekend.isBooked && setSelectedDate(weekend.date)}
-                            disabled={weekend.isPast || weekend.isBooked}
-                            className={`px-3 py-2 rounded-lg text-sm transition-colors ${
-                              weekend.isSelected
-                                ? 'bg-primary-500 text-dark-950 font-semibold'
-                                : weekend.isPast
-                                ? 'bg-dark-900/50 text-dark-600 cursor-not-allowed'
-                                : weekend.isBooked
-                                ? 'bg-red-500/20 text-red-400 cursor-not-allowed'
-                                : weekend.isLastAvailable
-                                ? 'bg-primary-500/20 text-primary-400 hover:bg-primary-500/30'
-                                : 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
-                            }`}
-                          >
-                            {weekend.day} {weekend.dayName}
-                          </button>
-                        ))}
-                      </div>
+                  <AnimatePresence>
+                    {(ceremony === 'photo-video' || ceremony === 'video') && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <RadioGroup
+                          title="Продължителност на видеозаснемане на церемонията"
+                          options={ceremonyVideoTimeOptions}
+                          value={ceremonyVideoTime}
+                          onChange={setCeremonyVideoTime}
+                        />
+                      </motion.div>
                     )}
-                  </div>
-                ))}
+                  </AnimatePresence>
+                </motion.div>
               </div>
 
-              {/* Legend */}
-              <div className="flex flex-wrap gap-4 text-xs mb-8">
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-green-500/30" />
-                  <span className="text-dark-400">Свободна</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-primary-500/30" />
-                  <span className="text-dark-400">Последна</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-red-500/30" />
-                  <span className="text-dark-400">Заета</span>
-                </div>
-              </div>
+              {/* Sticky Price Summary */}
+              <div className="lg:sticky lg:top-8">
+                <div className="glass rounded-2xl p-6">
+                  <h3 className="text-lg font-semibold text-dark-50 mb-4">Обобщение</h3>
 
-              {/* Total */}
-              <div className="p-4 rounded-xl bg-gradient-to-br from-primary-500/10 to-primary-600/10 border border-primary-500/20">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-dark-300">Избрани услуги:</span>
-                  <span className="text-dark-200">{selectedServices.length}</span>
-                </div>
-                {selectedDate && (
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-dark-300">Избрана дата:</span>
-                    <span className="text-dark-200">
-                      {new Date(selectedDate).toLocaleDateString('bg-BG', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                      })}
+                  <div className="mb-4">
+                    <span className="inline-block px-3 py-1 rounded-full bg-primary-500/10 text-primary-400 text-sm font-medium">
+                      {serviceTypeCards.find((s) => s.type === serviceType)?.label}
                     </span>
                   </div>
-                )}
-                <div className="flex items-center justify-between pt-2 border-t border-dark-700/50">
-                  <span className="text-dark-100 font-semibold">Обща цена:</span>
-                  <span className="text-2xl font-bold text-primary-400">{totalPrice} лв.</span>
+
+                  {priceBreakdown.length > 0 && (
+                    <div className="space-y-2 mb-6 max-h-64 overflow-y-auto pr-1">
+                      {priceBreakdown.map((item, i) => (
+                        <div key={i} className="flex items-center justify-between text-sm">
+                          <span className="text-dark-400 truncate mr-2">{item.label}</span>
+                          <span className="text-primary-400 font-medium whitespace-nowrap">
+                            +{item.price}€
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {priceBreakdown.length === 0 && (
+                    <p className="text-dark-500 text-sm mb-6">Основна конфигурация</p>
+                  )}
+
+                  <div className="p-4 rounded-xl bg-gradient-to-br from-primary-500/10 to-primary-600/10 border border-primary-500/20">
+                    <div className="text-dark-400 text-sm mb-1">Крайна цена</div>
+                    <div className="text-3xl font-bold text-primary-400">{totalPrice}€</div>
+                  </div>
+
+                  <motion.button
+                    type="button"
+                    onClick={reset}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full mt-4 py-3 rounded-xl border border-dark-700 text-dark-400 hover:text-dark-200 hover:border-dark-600 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <RotateCcw size={16} />
+                    Нулиране
+                  </motion.button>
                 </div>
               </div>
-
-              {/* Reset Button */}
-              <motion.button
-                onClick={reset}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full mt-4 py-3 rounded-xl border border-dark-700 text-dark-400 hover:text-dark-200 hover:border-dark-600 transition-colors flex items-center justify-center gap-2"
-              >
-                <RotateCcw size={16} />
-                Нулиране
-              </motion.button>
-            </div>
-          </SlideInRight>
-        </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
