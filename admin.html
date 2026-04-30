@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - CreativeHub Wedding</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-primary': '#F9C349',
+            'brand-accent': '#FFB100',
+            'brand-dark': '#1B1B1B',
+            'brand-secondary': '#252525',
+            'brand-light': '#E6E6E6',
+            'brand-muted': '#B6B6B6',
+          },
+          fontFamily: {
+            'display': ['DM Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'DM Sans', sans-serif; }
+  </style>
+</head>
+<body class="bg-brand-dark min-h-screen">
+  
+  <!-- Login Screen -->
+  <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
+    <div class="bg-brand-secondary rounded-3xl p-8 w-full max-w-md border border-white/10">
+      <h1 class="text-2xl font-bold text-brand-light text-center mb-2">Admin Panel</h1>
+      <p class="text-brand-muted text-center mb-6">CreativeHub Wedding</p>
+      
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="block text-brand-muted text-sm mb-2">Парола</label>
+          <input type="password" id="passwordInput" class="w-full px-4 py-3 rounded-xl bg-brand-dark border border-white/10 text-brand-light focus:ring-2 focus:ring-brand-primary focus:outline-none" placeholder="Въведете парола">
+        </div>
+        <p id="loginError" class="text-red-500 text-sm hidden">Грешна парола!</p>
+        <button type="submit" class="w-full py-3 px-6 rounded-full bg-brand-primary text-brand-dark font-semibold hover:bg-brand-accent transition-colors">
+          Вход
+        </button>
+      </form>
+      
+      <div class="mt-6 p-4 bg-brand-dark/50 rounded-xl">
+        <p class="text-brand-muted text-xs">
+          <strong class="text-brand-primary">Първи път?</strong> Паролата по подразбиране е: <code class="bg-brand-dark px-2 py-1 rounded">admin123</code>
+          <br><br>
+          Можете да я промените в кода на admin.html (ред ~200)
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard -->
+  <div id="adminDashboard" class="hidden">
+    <!-- Header -->
+    <header class="bg-brand-secondary border-b border-white/10 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+        <h1 class="text-xl font-bold text-brand-light">Admin Panel</h1>
+        <div class="flex items-center gap-4">
+          <a href="idnex.htm" target="_blank" class="text-brand-muted hover:text-brand-primary transition-colors text-sm">
+            Виж сайта →
+          </a>
+          <button id="logoutBtn" class="px-4 py-2 rounded-full border border-white/20 text-brand-light text-sm hover:bg-white/5 transition-colors">
+            Изход
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+      <!-- Tabs -->
+      <div class="flex gap-2 mb-8 border-b border-white/10">
+        <button class="tab-btn px-6 py-3 text-brand-light font-semibold border-b-2 border-brand-primary" data-tab="calendar">
+          📅 Календар
+        </button>
+        <button class="tab-btn px-6 py-3 text-brand-muted font-semibold border-b-2 border-transparent hover:text-brand-light transition-colors" data-tab="photos">
+          🖼️ Снимки
+        </button>
+        <button class="tab-btn px-6 py-3 text-brand-muted font-semibold border-b-2 border-transparent hover:text-brand-light transition-colors" data-tab="settings">
+          ⚙️ Настройки
+        </button>
+      </div>
+
+      <!-- Calendar Tab -->
+      <div id="calendarTab" class="tab-content">
+        <div class="grid lg:grid-cols-3 gap-8">
+          <!-- Calendar -->
+          <div class="lg:col-span-2">
+            <div class="bg-brand-secondary rounded-3xl p-6 border border-white/10">
+              <div class="flex items-center justify-between mb-6">
+                <button id="adminPrevMonth" class="p-2 rounded-full hover:bg-white/10 transition-colors text-brand-light">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <h3 id="adminCurrentMonth" class="text-xl font-bold text-brand-light"></h3>
+                <button id="adminNextMonth" class="p-2 rounded-full hover:bg-white/10 transition-colors text-brand-light">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+              
+              <div class="grid grid-cols-7 gap-1 mb-2">
+                <div class="text-center text-brand-muted text-sm py-2">Пн</div>
+                <div class="text-center text-brand-muted text-sm py-2">Вт</div>
+                <div class="text-center text-brand-muted text-sm py-2">Ср</div>
+                <div class="text-center text-brand-muted text-sm py-2">Чт</div>
+                <div class="text-center text-brand-muted text-sm py-2">Пт</div>
+                <div class="text-center text-brand-muted text-sm py-2">Сб</div>
+                <div class="text-center text-brand-muted text-sm py-2">Нд</div>
+              </div>
+              
+              <div id="adminCalendarGrid" class="grid grid-cols-7 gap-1"></div>
+              
+              <div class="flex flex-wrap items-center gap-4 mt-6 pt-6 border-t border-white/10">
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-green-500"></span>
+                  <span class="text-brand-muted text-sm">Свободна</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-red-500"></span>
+                  <span class="text-brand-muted text-sm">Заета</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-brand-primary"></span>
+                  <span class="text-brand-muted text-sm">Последна свободна</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Selected Date Panel -->
+          <div>
+            <div class="bg-brand-secondary rounded-3xl p-6 border border-white/10 sticky top-24">
+              <h4 class="text-lg font-bold text-brand-light mb-4">Избрана дата</h4>
+              <p id="selectedDateDisplay" class="text-brand-muted mb-6">Кликнете върху дата от календара</p>
+              
+              <div id="dateControls" class="hidden space-y-3">
+                <button id="setFree" class="w-full py-3 px-4 rounded-xl bg-green-500/20 border border-green-500/30 text-green-400 font-semibold hover:bg-green-500/30 transition-colors">
+                  ✓ Маркирай като свободна
+                </button>
+                <button id="setBooked" class="w-full py-3 px-4 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 font-semibold hover:bg-red-500/30 transition-colors">
+                  ✗ Маркирай като заета
+                </button>
+                <button id="setLastAvailable" class="w-full py-3 px-4 rounded-xl bg-brand-primary/20 border border-brand-primary/30 text-brand-primary font-semibold hover:bg-brand-primary/30 transition-colors">
+                  ⚠ Последна свободна
+                </button>
+              </div>
+              
+              <!-- Quick Stats -->
+              <div class="mt-8 pt-6 border-t border-white/10">
+                <h5 class="text-brand-muted text-sm mb-4">Статистики</h5>
+                <div class="space-y-2">
+                  <div class="flex justify-between">
+                    <span class="text-brand-muted text-sm">Заети дати:</span>
+                    <span id="bookedCount" class="text-red-400 font-semibold">0</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-brand-muted text-sm">Последни свободни:</span>
+                    <span id="lastAvailableCount" class="text-brand-primary font-semibold">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photos Tab -->
+      <div id="photosTab" class="tab-content hidden">
+        <div class="bg-brand-secondary rounded-3xl p-6 border border-white/10">
+          <h3 class="text-xl font-bold text-brand-light mb-6">Управление на галерията</h3>
+          
+          <div class="mb-8 p-4 bg-brand-primary/10 border border-brand-primary/30 rounded-xl">
+            <p class="text-brand-primary text-sm">
+              <strong>Забележка:</strong> За качване на снимки, препоръчваме използването на външен хостинг (напр. Imgur, Cloudinary, или вашия собствен сървър). Добавете URL адресите на снимките по-долу.
+            </p>
+          </div>
+          
+          <!-- Add Photo URL -->
+          <div class="mb-8">
+            <h4 class="text-brand-light font-semibold mb-4">Добави снимка</h4>
+            <div class="flex gap-4">
+              <input type="text" id="photoUrlInput" placeholder="https://example.com/image.jpg" class="flex-1 px-4 py-3 rounded-xl bg-brand-dark border border-white/10 text-brand-light focus:ring-2 focus:ring-brand-primary focus:outline-none">
+              <button id="addPhotoBtn" class="px-6 py-3 rounded-xl bg-brand-primary text-brand-dark font-semibold hover:bg-brand-accent transition-colors">
+                Добави
+              </button>
+            </div>
+          </div>
+          
+          <!-- Photo Grid -->
+          <div>
+            <h4 class="text-brand-light font-semibold mb-4">Текущи снимки в галерията</h4>
+            <div id="photoGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              <!-- Photos will be loaded here -->
+            </div>
+            <p id="noPhotosMsg" class="text-brand-muted text-center py-8 hidden">Няма добавени снимки</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Tab -->
+      <div id="settingsTab" class="tab-content hidden">
+        <div class="max-w-2xl">
+          <div class="bg-brand-secondary rounded-3xl p-6 border border-white/10 mb-6">
+            <h3 class="text-xl font-bold text-brand-light mb-6">Експорт / Импорт на данни</h3>
+            
+            <div class="space-y-4">
+              <button id="exportDataBtn" class="w-full py-3 px-6 rounded-xl bg-brand-dark border border-white/10 text-brand-light font-semibold hover:bg-white/5 transition-colors text-left flex items-center gap-3">
+                <span class="text-2xl">📤</span>
+                <div>
+                  <span class="block">Експорт на данните</span>
+                  <span class="block text-brand-muted text-sm">Изтегли JSON файл с всички настройки</span>
+                </div>
+              </button>
+              
+              <label class="w-full py-3 px-6 rounded-xl bg-brand-dark border border-white/10 text-brand-light font-semibold hover:bg-white/5 transition-colors text-left flex items-center gap-3 cursor-pointer">
+                <span class="text-2xl">📥</span>
+                <div>
+                  <span class="block">Импорт на данни</span>
+                  <span class="block text-brand-muted text-sm">Зареди JSON файл с настройки</span>
+                </div>
+                <input type="file" id="importDataInput" accept=".json" class="hidden">
+              </label>
+            </div>
+          </div>
+          
+          <div class="bg-brand-secondary rounded-3xl p-6 border border-white/10 mb-6">
+            <h3 class="text-xl font-bold text-brand-light mb-6">Опасна зона</h3>
+            <button id="clearAllDataBtn" class="w-full py-3 px-6 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 font-semibold hover:bg-red-500/30 transition-colors">
+              🗑️ Изтрий всички данни
+            </button>
+            <p class="text-brand-muted text-sm mt-3">Това ще изтрие всички запазени дати и снимки.</p>
+          </div>
+          
+          <div class="bg-brand-secondary rounded-3xl p-6 border border-white/10">
+            <h3 class="text-xl font-bold text-brand-light mb-4">Информация</h3>
+            <div class="space-y-2 text-brand-muted text-sm">
+              <p>Данните се съхраняват локално в браузъра (localStorage).</p>
+              <p>За да работи календарът на основния сайт, отворете го в същия браузър.</p>
+              <p>Препоръчително е периодично да експортирате данните като backup.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // ==========================================
+    // CONFIGURATION - CHANGE PASSWORD HERE
+    // ==========================================
+    const ADMIN_PASSWORD = 'admin123'; // ← ПРОМЕНИ ПАРОЛАТА ТУК
+    
+    // ==========================================
+    // LOCAL STORAGE KEYS
+    // ==========================================
+    const STORAGE_KEYS = {
+      bookedDates: 'wedding_booked_dates',
+      lastAvailableDates: 'wedding_last_available_dates',
+      photos: 'wedding_photos',
+      loggedIn: 'wedding_admin_logged_in'
+    };
+    
+    // ==========================================
+    // DATA MANAGEMENT
+    // ==========================================
+    function getData(key) {
+      const data = localStorage.getItem(key);
+      return data ? JSON.parse(data) : [];
+    }
+    
+    function setData(key, data) {
+      localStorage.setItem(key, JSON.stringify(data));
+    }
+    
+    let bookedDates = getData(STORAGE_KEYS.bookedDates);
+    let lastAvailableDates = getData(STORAGE_KEYS.lastAvailableDates);
+    let photos = getData(STORAGE_KEYS.photos);
+    
+    // ==========================================
+    // LOGIN SYSTEM
+    // ==========================================
+    const loginScreen = document.getElementById('loginScreen');
+    const adminDashboard = document.getElementById('adminDashboard');
+    const loginForm = document.getElementById('loginForm');
+    const passwordInput = document.getElementById('passwordInput');
+    const loginError = document.getElementById('loginError');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    function checkLogin() {
+      if (sessionStorage.getItem(STORAGE_KEYS.loggedIn) === 'true') {
+        showDashboard();
+      }
+    }
+    
+    function showDashboard() {
+      loginScreen.classList.add('hidden');
+      adminDashboard.classList.remove('hidden');
+      renderAdminCalendar();
+      renderPhotos();
+      updateStats();
+    }
+    
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (passwordInput.value === ADMIN_PASSWORD) {
+        sessionStorage.setItem(STORAGE_KEYS.loggedIn, 'true');
+        loginError.classList.add('hidden');
+        showDashboard();
+      } else {
+        loginError.classList.remove('hidden');
+        passwordInput.value = '';
+      }
+    });
+    
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.removeItem(STORAGE_KEYS.loggedIn);
+      location.reload();
+    });
+    
+    // ==========================================
+    // TABS
+    // ==========================================
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        
+        tabBtns.forEach(b => {
+          b.classList.remove('text-brand-light', 'border-brand-primary');
+          b.classList.add('text-brand-muted', 'border-transparent');
+        });
+        btn.classList.add('text-brand-light', 'border-brand-primary');
+        btn.classList.remove('text-brand-muted', 'border-transparent');
+        
+        tabContents.forEach(c => c.classList.add('hidden'));
+        document.getElementById(tab + 'Tab').classList.remove('hidden');
+      });
+    });
+    
+    // ==========================================
+    // CALENDAR
+    // ==========================================
+    const adminCalendarGrid = document.getElementById('adminCalendarGrid');
+    const adminCurrentMonth = document.getElementById('adminCurrentMonth');
+    const adminPrevMonth = document.getElementById('adminPrevMonth');
+    const adminNextMonth = document.getElementById('adminNextMonth');
+    const selectedDateDisplay = document.getElementById('selectedDateDisplay');
+    const dateControls = document.getElementById('dateControls');
+    
+    const monthNames = ['Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни', 'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'];
+    
+    let displayMonth = new Date().getMonth();
+    let displayYear = new Date().getFullYear();
+    let selectedDate = null;
+    
+    function formatDate(year, month, day) {
+      return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    }
+    
+    function renderAdminCalendar() {
+      adminCalendarGrid.innerHTML = '';
+      adminCurrentMonth.textContent = `${monthNames[displayMonth]} ${displayYear}`;
+      
+      const firstDay = new Date(displayYear, displayMonth, 1).getDay();
+      const startDay = firstDay === 0 ? 6 : firstDay - 1;
+      const daysInMonth = new Date(displayYear, displayMonth + 1, 0).getDate();
+      
+      for (let i = 0; i < startDay; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.className = 'aspect-square';
+        adminCalendarGrid.appendChild(emptyCell);
+      }
+      
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = formatDate(displayYear, displayMonth, day);
+        const cell = document.createElement('div');
+        
+        const isBooked = bookedDates.includes(dateStr);
+        const isLastAvailable = lastAvailableDates.includes(dateStr);
+        const isSelected = selectedDate === dateStr;
+        
+        let statusIndicator = '';
+        let bgClass = '';
+        
+        if (isBooked) {
+          statusIndicator = '<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-red-500"></span>';
+          bgClass = 'bg-red-500/10';
+        } else if (isLastAvailable) {
+          statusIndicator = '<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-brand-primary"></span>';
+          bgClass = 'bg-brand-primary/10';
+        } else {
+          const date = new Date(displayYear, displayMonth, day);
+          const dayOfWeek = date.getDay();
+          if (dayOfWeek === 0 || dayOfWeek === 6) {
+            statusIndicator = '<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-green-500"></span>';
+          }
+        }
+        
+        const selectedClass = isSelected ? 'ring-2 ring-brand-primary' : '';
+        
+        cell.className = `aspect-square flex items-center justify-center relative rounded-lg cursor-pointer hover:bg-white/10 transition-colors ${bgClass} ${selectedClass}`;
+        cell.innerHTML = `<span class="text-brand-light">${day}</span>${statusIndicator}`;
+        
+        cell.addEventListener('click', () => selectDate(dateStr, day));
+        
+        adminCalendarGrid.appendChild(cell);
+      }
+    }
+    
+    function selectDate(dateStr, day) {
+      selectedDate = dateStr;
+      selectedDateDisplay.innerHTML = `<span class="text-2xl font-bold text-brand-light">${day}</span><br><span class="text-brand-muted">${monthNames[displayMonth]} ${displayYear}</span>`;
+      dateControls.classList.remove('hidden');
+      renderAdminCalendar();
+    }
+    
+    adminPrevMonth.addEventListener('click', () => {
+      displayMonth--;
+      if (displayMonth < 0) { displayMonth = 11; displayYear--; }
+      renderAdminCalendar();
+    });
+    
+    adminNextMonth.addEventListener('click', () => {
+      displayMonth++;
+      if (displayMonth > 11) { displayMonth = 0; displayYear++; }
+      renderAdminCalendar();
+    });
+    
+    // Date status buttons
+    document.getElementById('setFree').addEventListener('click', () => {
+      if (!selectedDate) return;
+      bookedDates = bookedDates.filter(d => d !== selectedDate);
+      lastAvailableDates = lastAvailableDates.filter(d => d !== selectedDate);
+      saveAndRefresh();
+    });
+    
+    document.getElementById('setBooked').addEventListener('click', () => {
+      if (!selectedDate) return;
+      lastAvailableDates = lastAvailableDates.filter(d => d !== selectedDate);
+      if (!bookedDates.includes(selectedDate)) {
+        bookedDates.push(selectedDate);
+      }
+      saveAndRefresh();
+    });
+    
+    document.getElementById('setLastAvailable').addEventListener('click', () => {
+      if (!selectedDate) return;
+      bookedDates = bookedDates.filter(d => d !== selectedDate);
+      if (!lastAvailableDates.includes(selectedDate)) {
+        lastAvailableDates.push(selectedDate);
+      }
+      saveAndRefresh();
+    });
+    
+    function saveAndRefresh() {
+      setData(STORAGE_KEYS.bookedDates, bookedDates);
+      setData(STORAGE_KEYS.lastAvailableDates, lastAvailableDates);
+      renderAdminCalendar();
+      updateStats();
+    }
+    
+    function updateStats() {
+      document.getElementById('bookedCount').textContent = bookedDates.length;
+      document.getElementById('lastAvailableCount').textContent = lastAvailableDates.length;
+    }
+    
+    // ==========================================
+    // PHOTOS
+    // ==========================================
+    const photoUrlInput = document.getElementById('photoUrlInput');
+    const addPhotoBtn = document.getElementById('addPhotoBtn');
+    const photoGrid = document.getElementById('photoGrid');
+    const noPhotosMsg = document.getElementById('noPhotosMsg');
+    
+    function renderPhotos() {
+      photoGrid.innerHTML = '';
+      
+      if (photos.length === 0) {
+        noPhotosMsg.classList.remove('hidden');
+        return;
+      }
+      
+      noPhotosMsg.classList.add('hidden');
+      
+      photos.forEach((url, index) => {
+        const div = document.createElement('div');
+        div.className = 'relative group';
+        div.innerHTML = `
+          <img src="${url}" alt="Photo ${index + 1}" class="w-full aspect-square object-cover rounded-xl">
+          <button class="delete-photo absolute top-2 right-2 w-8 h-8 rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center" data-index="${index}">
+            ✕
+          </button>
+        `;
+        photoGrid.appendChild(div);
+      });
+      
+      document.querySelectorAll('.delete-photo').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = parseInt(btn.dataset.index);
+          photos.splice(index, 1);
+          setData(STORAGE_KEYS.photos, photos);
+          renderPhotos();
+        });
+      });
+    }
+    
+    addPhotoBtn.addEventListener('click', () => {
+      const url = photoUrlInput.value.trim();
+      if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+        photos.push(url);
+        setData(STORAGE_KEYS.photos, photos);
+        photoUrlInput.value = '';
+        renderPhotos();
+      } else {
+        alert('Моля, въведете валиден URL адрес');
+      }
+    });
+    
+    // ==========================================
+    // SETTINGS
+    // ==========================================
+    document.getElementById('exportDataBtn').addEventListener('click', () => {
+      const data = {
+        bookedDates,
+        lastAvailableDates,
+        photos,
+        exportDate: new Date().toISOString()
+      };
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `wedding-admin-backup-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+    
+    document.getElementById('importDataInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const data = JSON.parse(event.target.result);
+          
+          if (data.bookedDates) {
+            bookedDates = data.bookedDates;
+            setData(STORAGE_KEYS.bookedDates, bookedDates);
+          }
+          if (data.lastAvailableDates) {
+            lastAvailableDates = data.lastAvailableDates;
+            setData(STORAGE_KEYS.lastAvailableDates, lastAvailableDates);
+          }
+          if (data.photos) {
+            photos = data.photos;
+            setData(STORAGE_KEYS.photos, photos);
+          }
+          
+          renderAdminCalendar();
+          renderPhotos();
+          updateStats();
+          alert('Данните са импортирани успешно!');
+        } catch (err) {
+          alert('Грешка при импортиране на файла');
+        }
+      };
+      reader.readAsText(file);
+    });
+    
+    document.getElementById('clearAllDataBtn').addEventListener('click', () => {
+      if (confirm('Сигурни ли сте, че искате да изтриете всички данни? Това действие е необратимо!')) {
+        localStorage.removeItem(STORAGE_KEYS.bookedDates);
+        localStorage.removeItem(STORAGE_KEYS.lastAvailableDates);
+        localStorage.removeItem(STORAGE_KEYS.photos);
+        bookedDates = [];
+        lastAvailableDates = [];
+        photos = [];
+        renderAdminCalendar();
+        renderPhotos();
+        updateStats();
+        alert('Всички данни са изтрити.');
+      }
+    });
+    
+    // ==========================================
+    // INIT
+    // ==========================================
+    checkLogin();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="bg" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CreativeHub Wedding - Професионална сватбена фотография и видеография. Уловете магията на вашия специален ден.">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Modern font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <title>CreativeHub Wedding — Сватбена фотография</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#fefce8',
+              100: '#fef9c3',
+              200: '#fef08a',
+              300: '#fde047',
+              400: '#facc15',
+              500: '#eab308',
+              600: '#ca8a04',
+              700: '#a16207',
+              800: '#854d0e',
+              900: '#713f12',
+            },
+            dark: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8',
+              500: '#64748b',
+              600: '#475569',
+              700: '#334155',
+              800: '#1e293b',
+              900: '#0f172a',
+              950: '#0a0a0a',
+            }
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'fade-up': 'fadeUp 0.6s ease-out forwards',
+            'fade-in': 'fadeIn 0.6s ease-out forwards',
+            'scale-in': 'scaleIn 0.5s ease-out forwards',
+            'slide-in-right': 'slideInRight 0.5s ease-out forwards',
+            'slide-in-left': 'slideInLeft 0.5s ease-out forwards',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            fadeUp: {
+              '0%': { opacity: '0', transform: 'translateY(30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            scaleIn: {
+              '0%': { opacity: '0', transform: 'scale(0.95)' },
+              '100%': { opacity: '1', transform: 'scale(1)' },
+            },
+            slideInRight: {
+              '0%': { opacity: '0', transform: 'translateX(30px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' },
+            },
+            slideInLeft: {
+              '0%': { opacity: '0', transform: 'translateX(-30px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' },
+            },
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+    
+    /* Selection */
+    ::selection { background: rgba(234, 179, 8, 0.3); color: #fff; }
+    
+    /* Animations */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    
+    .reveal-left { opacity: 0; transform: translateX(-50px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .reveal-left.active { opacity: 1; transform: translateX(0); }
+    
+    .reveal-right { opacity: 0; transform: translateX(50px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .reveal-right.active { opacity: 1; transform: translateX(0); }
+    
+    .reveal-scale { opacity: 0; transform: scale(0.9); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .reveal-scale.active { opacity: 1; transform: scale(1); }
+    
+    /* Stagger children */
+    .stagger-children > * { opacity: 0; transform: translateY(20px); }
+    .stagger-children.active > *:nth-child(1) { animation: fadeUp 0.5s 0.1s ease-out forwards; }
+    .stagger-children.active > *:nth-child(2) { animation: fadeUp 0.5s 0.2s ease-out forwards; }
+    .stagger-children.active > *:nth-child(3) { animation: fadeUp 0.5s 0.3s ease-out forwards; }
+    .stagger-children.active > *:nth-child(4) { animation: fadeUp 0.5s 0.4s ease-out forwards; }
+    .stagger-children.active > *:nth-child(5) { animation: fadeUp 0.5s 0.5s ease-out forwards; }
+    .stagger-children.active > *:nth-child(6) { animation: fadeUp 0.5s 0.6s ease-out forwards; }
+    
+    /* Glassmorphism */
+    .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .glass-dark { background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    
+    /* Gradient text */
+    .gradient-text { background: linear-gradient(135deg, #fde047 0%, #eab308 50%, #ca8a04 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    
+    /* Magnetic button effect */
+    .magnetic { transition: transform 0.3s ease; }
+    
+    /* Image shine effect */
+    .shine { position: relative; overflow: hidden; }
+    .shine::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transition: left 0.5s; }
+    .shine:hover::after { left: 100%; }
+    
+    /* Smooth image loading */
+    img { transition: opacity 0.3s ease; }
+    img[loading="lazy"] { opacity: 0; }
+    img.loaded, img[loading="lazy"].loaded { opacity: 1; }
+    
+    /* Hero parallax */
+    .parallax { transform: translateY(calc(var(--scroll) * 0.3)); }
+    
+    /* Custom checkbox */
+    .custom-checkbox { appearance: none; width: 1.25rem; height: 1.25rem; border: 2px solid #475569; border-radius: 0.375rem; transition: all 0.2s; cursor: pointer; }
+    .custom-checkbox:checked { background: linear-gradient(135deg, #facc15, #eab308); border-color: #eab308; }
+    .custom-checkbox:checked::after { content: '✓'; display: flex; align-items: center; justify-content: center; color: #0a0a0a; font-size: 0.75rem; font-weight: bold; }
+    
+    /* Glow effect */
+    .glow { box-shadow: 0 0 40px rgba(234, 179, 8, 0.15); }
+    .glow-hover:hover { box-shadow: 0 0 60px rgba(234, 179, 8, 0.25); }
+    
+    /* Line animation */
+    .line-animate { width: 0; transition: width 0.8s ease; }
+    .line-animate.active { width: 100%; }
+  </style>
+</head>
+
+<body class="bg-dark-950 text-dark-200 font-sans antialiased overflow-x-hidden">
+  
+  <!-- Cursor follower (desktop only) -->
+  <div id="cursor" class="hidden lg:block fixed w-6 h-6 rounded-full border border-primary-400/50 pointer-events-none z-[100] transition-transform duration-150 ease-out" style="transform: translate(-50%, -50%);"></div>
+  <div id="cursorDot" class="hidden lg:block fixed w-1.5 h-1.5 rounded-full bg-primary-400 pointer-events-none z-[100]" style="transform: translate(-50%, -50%);"></div>
+
+  <!-- Navigation -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <a href="#" class="relative z-10 flex items-center group">
+          <img src="white-1.png" alt="CreativeHub Wedding" class="h-14 w-auto transform group-hover:scale-105 transition-transform duration-300">
+          <div class="hidden"><!-- Keep for SEO -->
+            <span class="block text-white font-display text-lg tracking-wide">CreativeHub</span>
+            <span class="block text-primary-400 text-xs uppercase tracking-[0.2em]">Wedding</span>
+          </div>
+        </a>
+        
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center gap-1">
+          <a href="#services" class="nav-link px-4 py-2 text-sm text-dark-300 hover:text-white transition-colors relative group">
+            Услуги
+            <span class="absolute bottom-0 left-4 right-4 h-px bg-primary-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+          </a>
+          <a href="#portfolio" class="nav-link px-4 py-2 text-sm text-dark-300 hover:text-white transition-colors relative group">
+            Портфолио
+            <span class="absolute bottom-0 left-4 right-4 h-px bg-primary-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+          </a>
+          <a href="#calculator" class="nav-link px-4 py-2 text-sm text-dark-300 hover:text-white transition-colors relative group">
+            Калкулатор
+            <span class="absolute bottom-0 left-4 right-4 h-px bg-primary-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+          </a>
+
+        </div>
+        
+        <!-- CTA Button -->
+        <div class="hidden md:block">
+          <a href="#contact" class="magnetic inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-primary-400 to-primary-500 text-dark-950 text-sm font-semibold rounded-full hover:shadow-lg hover:shadow-primary-500/25 transition-all duration-300 hover:-translate-y-0.5">
+            <span>Свържи се</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+        
+        <!-- Mobile Menu Toggle -->
+        <button id="menuToggle" class="md:hidden relative z-10 w-10 h-10 flex items-center justify-center" aria-label="Toggle menu">
+          <div class="w-6 flex flex-col gap-1.5">
+            <span class="menu-line w-full h-0.5 bg-white transition-all duration-300 origin-center"></span>
+            <span class="menu-line w-full h-0.5 bg-white transition-all duration-300"></span>
+            <span class="menu-line w-4 h-0.5 bg-white transition-all duration-300 origin-center ml-auto"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden fixed inset-0 bg-dark-950/98 backdrop-blur-xl -translate-x-full transition-transform duration-500 z-40">
+      <div class="flex flex-col items-center justify-center h-full gap-8">
+        <a href="#services" class="mobile-nav-link text-3xl font-display text-white hover:text-primary-400 transition-colors">Услуги</a>
+        <a href="#portfolio" class="mobile-nav-link text-3xl font-display text-white hover:text-primary-400 transition-colors">Портфолио</a>
+        <a href="#calculator" class="mobile-nav-link text-3xl font-display text-white hover:text-primary-400 transition-colors">Калкулатор</a>
+
+        <a href="#contact" class="mobile-nav-link mt-4 px-8 py-3 bg-gradient-to-r from-primary-400 to-primary-500 text-dark-950 font-semibold rounded-full">Свържи се</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- Video Background -->
+    <div class="absolute inset-0">
+      <div class="absolute inset-0 bg-gradient-to-b from-dark-950/60 via-dark-950/40 to-dark-950 z-10"></div>
+      <img 
+        src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop" 
+        alt="Wedding" 
+        class="w-full h-full object-cover parallax"
+        id="heroBg"
+      >
+      <!-- Uncomment for video:
+      <video autoplay muted loop playsinline class="w-full h-full object-cover">
+        <source src="wedding-video.mp4" type="video/mp4">
+      </video>
+      -->
+    </div>
+    
+    <!-- Floating Elements -->
+    <div class="absolute top-1/4 left-10 w-20 h-20 border border-primary-400/20 rounded-full animate-float hidden lg:block"></div>
+    <div class="absolute bottom-1/3 right-16 w-32 h-32 border border-primary-400/10 rounded-full animate-float hidden lg:block" style="animation-delay: 2s;"></div>
+    
+    <!-- Content -->
+    <div class="relative z-20 text-center px-4 max-w-5xl mx-auto">
+      <div class="space-y-8">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 glass rounded-full animate-fade-in" style="animation-delay: 0.2s;">
+          <span class="w-2 h-2 bg-primary-400 rounded-full animate-pulse"></span>
+          <span class="text-sm text-dark-300">Сватбен сезон 2026 • Записвания отворени</span>
+        </div>
+        
+        <!-- Heading -->
+        <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white leading-[1.1] animate-fade-up" style="animation-delay: 0.4s;">
+          Уловете магията на
+          <span class="block gradient-text">вашата любов</span>
+        </h1>
+        
+        <!-- Subtitle -->
+        <p class="text-lg sm:text-xl text-dark-300 max-w-2xl mx-auto animate-fade-up" style="animation-delay: 0.6s;">
+          Превръщаме най-важния ден от живота ви в безсмъртни спомени чрез изкуството на фотографията и видеографията
+        </p>
+        
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-fade-up" style="animation-delay: 0.8s;">
+          <a href="#portfolio" class="group inline-flex items-center gap-3 px-8 py-4 bg-white text-dark-950 font-semibold rounded-full hover:bg-primary-400 transition-all duration-300">
+            <span>Разгледай работите ни</span>
+            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <a href="#calculator" class="inline-flex items-center gap-3 px-8 py-4 glass text-white font-semibold rounded-full hover:bg-white/10 transition-all duration-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            <span>Виж цените</span>
+          </a>
+        </div>
+        
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-8 pt-12 max-w-lg mx-auto animate-fade-up" style="animation-delay: 1s;">
+          <div class="text-center">
+            <div class="text-3xl sm:text-4xl font-display text-white">500+</div>
+            <div class="text-sm text-dark-400">Сватби</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl sm:text-4xl font-display text-white">8</div>
+            <div class="text-sm text-dark-400">Години опит</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl sm:text-4xl font-display text-white">100%</div>
+            <div class="text-sm text-dark-400">Доволни</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-fade-in" style="animation-delay: 1.2s;">
+      <a href="#services" class="flex flex-col items-center gap-2 text-dark-400 hover:text-primary-400 transition-colors">
+        <span class="text-xs uppercase tracking-widest">Scroll</span>
+        <div class="w-6 h-10 border-2 border-current rounded-full flex justify-center pt-2">
+          <div class="w-1 h-2 bg-current rounded-full animate-bounce"></div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-32 relative overflow-hidden">
+    <!-- Background decoration -->
+    <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-primary-400/5 to-transparent rounded-full blur-3xl"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="text-center mb-20 reveal">
+        <span class="inline-block px-4 py-1.5 text-xs uppercase tracking-[0.2em] text-primary-400 border border-primary-400/30 rounded-full mb-6">Нашите услуги</span>
+        <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl text-white mb-6">
+          Какво предлагаме
+        </h2>
+        <p class="text-dark-400 text-lg max-w-2xl mx-auto">
+          Пълен пакет от услуги, за да направим вашия ден незабравим
+        </p>
+      </div>
+      
+      <!-- Services Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-children">
+        <!-- Service Card 1 -->
+        <article class="group relative p-8 glass rounded-3xl hover:bg-white/10 transition-all duration-500 glow-hover">
+          <div class="absolute top-8 right-8 text-7xl font-display text-dark-800/50 group-hover:text-primary-400/20 transition-colors">01</div>
+          <div class="relative z-10">
+            <div class="w-14 h-14 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-dark-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <h3 class="text-2xl font-display text-white mb-3">Фотография</h3>
+            <p class="text-dark-400 leading-relaxed mb-6">
+              Професионална сватбена фотография с до 2 фотографа, художествена обработка и ретуш на избрани кадри.
+            </p>
+            <ul class="space-y-2 text-sm text-dark-300">
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>До 10 часа заснемане</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>500+ обработени снимки</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Онлайн галерия</li>
+            </ul>
+          </div>
+        </article>
+        
+        <!-- Service Card 2 -->
+        <article class="group relative p-8 glass rounded-3xl hover:bg-white/10 transition-all duration-500 glow-hover">
+          <div class="absolute top-8 right-8 text-7xl font-display text-dark-800/50 group-hover:text-primary-400/20 transition-colors">02</div>
+          <div class="relative z-10">
+            <div class="w-14 h-14 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-dark-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            </div>
+            <h3 class="text-2xl font-display text-white mb-3">Видеография</h3>
+            <p class="text-dark-400 leading-relaxed mb-6">
+              Кинематографично качество с 4K резолюция, професионален монтаж и цветова корекция.
+            </p>
+            <ul class="space-y-2 text-sm text-dark-300">
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Сватбен филм (15-20 мин)</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Кратък трейлър (2-3 мин)</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Лицензирана музика</li>
+            </ul>
+          </div>
+        </article>
+        
+        <!-- Service Card 3 -->
+        <article class="group relative p-8 glass rounded-3xl hover:bg-white/10 transition-all duration-500 glow-hover md:col-span-2 lg:col-span-1">
+          <div class="absolute top-8 right-8 text-7xl font-display text-dark-800/50 group-hover:text-primary-400/20 transition-colors">03</div>
+          <div class="relative z-10">
+            <div class="w-14 h-14 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-dark-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+            </div>
+            <h3 class="text-2xl font-display text-white mb-3">Допълнителни</h3>
+            <p class="text-dark-400 leading-relaxed mb-6">
+              Въздушни кадри с дрон, love story сесия, фотобудка и още много екстри за вашия специален ден.
+            </p>
+            <ul class="space-y-2 text-sm text-dark-300">
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Дрон заснемане</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Love Story сесия</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Same-day edit</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="py-32 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 reveal">
+        <div>
+          <span class="inline-block px-4 py-1.5 text-xs uppercase tracking-[0.2em] text-primary-400 border border-primary-400/30 rounded-full mb-6">Портфолио</span>
+          <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl text-white">
+            Нашите работи
+          </h2>
+        </div>
+        <button id="openGallery" class="group inline-flex items-center gap-2 text-primary-400 hover:text-primary-300 transition-colors">
+          <span>Виж всички</span>
+          <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </button>
+      </div>
+      
+      <!-- Gallery Grid -->
+      <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 stagger-children">
+        <!-- Images will be loaded dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="fixed inset-0 z-[80] hidden">
+    <div class="absolute inset-0 bg-dark-950/98 backdrop-blur-xl" id="lightboxOverlay"></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+      <button id="lightboxClose" class="absolute top-6 right-6 w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:text-primary-400 transition-colors z-10">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <button id="lightboxPrev" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:text-primary-400 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button id="lightboxNext" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:text-primary-400 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <img id="lightboxImage" src="" alt="" class="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl">
+    </div>
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-sm text-dark-400" id="lightboxCounter">1 / 6</div>
+  </div>
+
+  <!-- Calculator Section -->
+  <section id="calculator" class="py-32 relative overflow-hidden">
+    <!-- Background -->
+    <div class="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-400/5 rounded-full blur-3xl"></div>
+    
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="text-center mb-16 reveal">
+        <span class="inline-block px-4 py-1.5 text-xs uppercase tracking-[0.2em] text-primary-400 border border-primary-400/30 rounded-full mb-6">Калкулатор</span>
+        <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl text-white mb-6">
+          Изградете вашия пакет
+        </h2>
+        <p class="text-dark-400 text-lg max-w-2xl mx-auto">
+          Изберете услугите, които желаете и вижте цената в реално време
+        </p>
+      </div>
+      
+      <!-- Quick Packages -->
+      <div class="grid md:grid-cols-3 gap-4 mb-12 reveal">
+        <button class="preset-btn group relative p-6 glass rounded-2xl text-left transition-all duration-300 hover:bg-white/10" data-preset="silver">
+          <div class="absolute top-4 right-4 w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full"></div>
+          <h3 class="text-xl font-display text-white mb-2">Silver</h3>
+          <p class="text-sm text-dark-400 mb-4">Фотография + обработка</p>
+          <div class="text-2xl font-display gradient-text">1,390 лв</div>
+        </button>
+        
+        <button class="preset-btn group relative p-6 glass rounded-2xl text-left transition-all duration-300 hover:bg-white/10 ring-2 ring-primary-400/50" data-preset="gold">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary-400 text-dark-950 text-xs font-semibold rounded-full">Популярен</div>
+          <div class="absolute top-4 right-4 w-8 h-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full"></div>
+          <h3 class="text-xl font-display text-white mb-2">Gold</h3>
+          <p class="text-sm text-dark-400 mb-4">Фото + Видео + Дрон</p>
+          <div class="text-2xl font-display gradient-text">2,590 лв</div>
+        </button>
+        
+        <button class="preset-btn group relative p-6 glass rounded-2xl text-left transition-all duration-300 hover:bg-white/10" data-preset="diamond">
+          <div class="absolute top-4 right-4 w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-full"></div>
+          <h3 class="text-xl font-display text-white mb-2">Diamond</h3>
+          <p class="text-sm text-dark-400 mb-4">Всичко включено</p>
+          <div class="text-2xl font-display gradient-text">3,190 лв</div>
+        </button>
+      </div>
+      
+      <!-- Calculator Grid -->
+      <div class="glass rounded-3xl p-8 md:p-10 reveal">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Photography Column -->
+          <div>
+            <h3 class="flex items-center gap-3 text-lg font-semibold text-white mb-6">
+              <span class="w-10 h-10 bg-primary-400/20 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </span>
+              Фотография
+            </h3>
+            <div class="space-y-3">
+              <label class="flex items-center justify-between p-4 bg-dark-900/50 rounded-xl cursor-pointer hover:bg-dark-800/50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <input type="checkbox" class="calc-item custom-checkbox" data-price="800" data-name="Един фотограф">
+                  <span class="text-dark-200 text-sm group-hover:text-white transition-colors">Един фотограф (до 10ч)</span>
+                </div>
+                <span class="text-primary-400 font-semibold text-sm">800 лв</span>
+              </label>
+              <label class="flex items-center justify-between p-4 bg-dark-900/50 rounded-xl cursor-pointer hover:bg-dark-800/50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <input type="checkbox" class="calc-item custom-checkbox" data-price="500" data-name="Втори фотограф">
+                  <span class="text-dark-200 text-sm group-hover:text-white transition-colors">Втори фотограф</span>
+                </div>
+                <span class="text-primary-400 font-semibold text-sm">+500 лв</span>
+              </label>
+              <label class="flex items-center justify-between p-4 bg-dark-900/50 rounded-xl cursor-pointer hover:bg-dark-800/50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <input type="checkbox" class="calc-item custom-checkbox" data-price="200" data-name="Сватбена фотосесия">
+                  <span class="text-dark-200 text-sm group-hover:text-white transition-colors">Сватбена фотосесия</span>
+                </div>
+                <span class="text-primary-400 font-semibold text-sm">+200 лв</span>
+              </label>
+              <label class="flex items-center justify-between p-4 bg-dark-900/50 rounded-xl cursor-pointer hover:bg-dark-800/50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <input type="checkbox" class="calc-item custom-checkbox" data-price="150" data-name="40 кадъра ретуш">
+                  <span class="text-dark-200 text-sm group-hover:text-white transition-colors">40 кадъра ретуш</span>
+                </div>
+                <span class="text-primary-400 font-semibold text-sm">+150 лв</span>
+              </label>
+            </div>
+          </div>
+          
+          <!-- Videography Column -->
+          <div>
+            <h3 class="flex items-center gap-3 text-lg font-semibold text-white mb-6">
+              <span class="w-10 h-10 bg-primary-400/20 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              </span>
+              Видеография
+            </h3>
+            <div class="space-y-3">
+              <label class="flex items-center justify-between p-4 bg-dark-900/50 rounded-xl cursor-pointer hover:bg-dark-800/50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <input type="checkbox" class="calc-item custom-checkbox" data-price="1200" data-name="Видеограф">
+                  <span class="text-dark-200 text-sm group-hover:text-white transition-colors">Видеограф (до 10ч)</span>
+                </div>
+                <span class="text-primary-400 font-semibold text-sm">1200 лв</span>
+              </label>
+              <label class="flex items-center justify-between p-4 bg-dark-900/50 rounded-xl cursor-pointer hover:bg-dark-800/50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <input type="checkbox" class="calc-item custom-checkbox" data-price="300" data-name="Кратък трейлър">
+                  <span class="text-dark-200 text-sm group-hover:text-white transition-colors">Кратък трейлър (2-3 мин)</span>
+                </div>
+                <span class="text-primary-400 font-semibold text-sm">+300 лв</span>
+              </label>
+              <label class="flex items-center justify-between p-4 bg-dark-900/50 rounded-xl cursor-pointer hover:bg-dark-800/50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <input type="checkbox" class="calc-item custom-checkbox" data-price="500" data-name="Сватбен филм">
+                  <span class="text-dark-200 text-sm group-hover:text-white transition-colors">Сватбен филм (15 мин)</span>
+                </div>
+                <span class="text-primary-400 font-semibold text-sm">+500 лв</span>
+              </label>
+              <label class="flex items-center justify-between p-4 bg-dark-900/50 rounded-xl cursor-pointer hover:bg-dark-800/50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <input type="checkbox" class="calc-item custom-checkbox" data-price="400" data-name="Love Story">
+                  <span class="text-dark-200 text-sm group-hover:text-white transition-colors">Love Story клип</span>
+                </div>
+                <span class="text-primary-400 font-semibold text-sm">+400 лв</span>
+              </label>
+            </div>
+          </div>
+          
+          <!-- Extras Column -->
+          <div class="md:col-span-2 lg:col-span-1">
+            <h3 class="flex items-center gap-3 text-lg font-semibold text-white mb-6">
+              <span class="w-10 h-10 bg-primary-400/20 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+              </span>
+              Допълнителни
+            </h3>
+            <div class="space-y-3">
+              <label class="flex items-center justify-between p-4 bg-dark-900/50 rounded-xl cursor-pointer hover:bg-dark-800/50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <input type="checkbox" class="calc-item custom-checkbox" data-price="250" data-name="Дрон кадри">
+                  <span class="text-dark-200 text-sm group-hover:text-white transition-colors">Дрон заснемане</span>
+                </div>
+                <span class="text-primary-400 font-semibold text-sm">+250 лв</span>
+              </label>
+              <label class="flex items-center justify-between p-4 bg-dark-900/50 rounded-xl cursor-pointer hover:bg-dark-800/50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <input type="checkbox" class="calc-item custom-checkbox" data-price="150" data-name="Gimbal стабилизатор">
+                  <span class="text-dark-200 text-sm group-hover:text-white transition-colors">Gimbal стабилизатор</span>
+                </div>
+                <span class="text-primary-400 font-semibold text-sm">+150 лв</span>
+              </label>
+              <label class="flex items-center justify-between p-4 bg-dark-900/50 rounded-xl cursor-pointer hover:bg-dark-800/50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <input type="checkbox" class="calc-item custom-checkbox" data-price="100" data-name="Допълнителен час">
+                  <span class="text-dark-200 text-sm group-hover:text-white transition-colors">Допълнителен час</span>
+                </div>
+                <span class="text-primary-400 font-semibold text-sm">+100 лв</span>
+              </label>
+              <label class="flex items-center justify-between p-4 bg-dark-900/50 rounded-xl cursor-pointer hover:bg-dark-800/50 transition-colors group">
+                <div class="flex items-center gap-3">
+                  <input type="checkbox" class="calc-item custom-checkbox" data-price="50" data-name="Линк за споделяне">
+                  <span class="text-dark-200 text-sm group-hover:text-white transition-colors">Онлайн галерия</span>
+                </div>
+                <span class="text-primary-400 font-semibold text-sm">+50 лв</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Date Selection (Step 4) -->
+        <div class="mt-10 pt-8 border-t border-dark-700/50">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="flex items-center gap-3 text-lg font-semibold text-white">
+              <span class="w-10 h-10 bg-primary-400/20 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </span>
+              Изберете дата
+            </h3>
+            <!-- Selected Date Display (inline) -->
+            <div id="selectedDateDisplay" class="flex items-center gap-2">
+              <span id="selectedDateText" class="text-sm text-dark-400">Няма избрана дата</span>
+              <button id="clearDate" class="hidden text-dark-400 hover:text-red-400 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+          </div>
+          
+          <!-- 4-Month Mini Calendar Grid -->
+          <div id="calendarContainer" class="bg-dark-900/30 rounded-xl p-4 overflow-visible relative">
+            <!-- Navigation -->
+            <div class="flex items-center justify-between mb-3 relative z-30">
+              <button id="prevMonth" class="w-8 h-8 bg-dark-800/50 rounded-full flex items-center justify-center text-dark-400 hover:text-primary-400 transition-all">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <span id="currentMonth" class="text-sm font-medium text-dark-300"></span>
+              <button id="nextMonth" class="w-8 h-8 bg-dark-800/50 rounded-full flex items-center justify-center text-dark-400 hover:text-primary-400 transition-all">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+            
+            <!-- 4 Month Grid -->
+            <div id="calendarGrid" class="grid grid-cols-2 lg:grid-cols-4 gap-3 py-2 relative">
+              <!-- 4 mini months will be generated by JavaScript -->
+            </div>
+            
+            <!-- Legend -->
+            <div class="flex flex-wrap items-center justify-center gap-4 mt-3 pt-3 border-t border-dark-700/30">
+              <div class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span><span class="text-[10px] text-dark-500">Свободна</span></div>
+              <div class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-red-500"></span><span class="text-[10px] text-dark-500">Заета</span></div>
+              <div class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-primary-400"></span><span class="text-[10px] text-dark-500">Последна</span></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Summary -->
+        <div class="mt-10 pt-8 border-t border-dark-700/50">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <p class="text-sm text-dark-400 mb-2">Избрани услуги:</p>
+              <p id="selectedServices" class="text-dark-200">Няма избрани услуги</p>
+            </div>
+            <div class="text-right">
+              <p class="text-sm text-dark-400 mb-1">Обща сума:</p>
+              <p id="totalPrice" class="text-5xl font-display gradient-text transition-transform">0 лв</p>
+            </div>
+          </div>
+          
+          <div class="flex flex-col sm:flex-row gap-4 mt-8">
+            <button id="resetCalc" class="flex-1 py-4 px-6 border border-dark-700 text-dark-300 rounded-full font-semibold hover:border-dark-500 hover:text-white transition-colors">
+              Изчисти всичко
+            </button>
+            <a href="#contact" class="flex-1 py-4 px-6 bg-gradient-to-r from-primary-400 to-primary-500 text-dark-950 rounded-full font-semibold text-center hover:shadow-lg hover:shadow-primary-500/25 transition-all hover:-translate-y-0.5">
+              Изпрати запитване
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-32 relative overflow-hidden">
+    <!-- Background -->
+    <div class="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
+    <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-primary-400/5 to-transparent"></div>
+    
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <!-- Left - Info -->
+        <div class="reveal-left">
+          <span class="inline-block px-4 py-1.5 text-xs uppercase tracking-[0.2em] text-primary-400 border border-primary-400/30 rounded-full mb-6">Контакт</span>
+          <h2 class="font-display text-4xl sm:text-5xl text-white mb-6">
+            Нека създадем
+            <span class="gradient-text">нещо красиво</span>
+          </h2>
+          <p class="text-dark-400 text-lg mb-10">
+            Готови сме да чуем вашата история и да я превърнем в незабравими спомени. Свържете се с нас за безплатна консултация.
+          </p>
+          
+          <!-- Contact Info -->
+          <div class="space-y-6">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 glass rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </div>
+              <div>
+                <p class="text-sm text-dark-400">Email</p>
+                <a href="mailto:hello@creativehub.bg" class="text-white hover:text-primary-400 transition-colors">hello@creativehub.bg</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 glass rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              </div>
+              <div>
+                <p class="text-sm text-dark-400">Телефон</p>
+                <a href="tel:+359888123456" class="text-white hover:text-primary-400 transition-colors">+359 888 123 456</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 glass rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div>
+                <p class="text-sm text-dark-400">Локация</p>
+                <span class="text-white">София, България</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Social Links -->
+          <div class="flex gap-4 mt-10">
+            <a href="#" class="w-12 h-12 glass rounded-xl flex items-center justify-center text-dark-400 hover:text-primary-400 hover:bg-white/10 transition-all">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="#" class="w-12 h-12 glass rounded-xl flex items-center justify-center text-dark-400 hover:text-primary-400 hover:bg-white/10 transition-all">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="#" class="w-12 h-12 glass rounded-xl flex items-center justify-center text-dark-400 hover:text-primary-400 hover:bg-white/10 transition-all">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Right - Form -->
+        <div class="reveal-right">
+          <form id="contactForm" class="glass rounded-3xl p-8 md:p-10">
+            <div class="grid gap-6">
+              <div class="grid sm:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm text-dark-400 mb-2">Име *</label>
+                  <input 
+                    type="text" 
+                    id="contactName" 
+                    required 
+                    class="w-full px-5 py-4 bg-dark-900/50 border border-dark-700/50 rounded-xl text-white placeholder-dark-500 focus:border-primary-400/50 focus:ring-1 focus:ring-primary-400/50 focus:outline-none transition-colors"
+                    placeholder="Вашето име"
+                  >
+                </div>
+                <div>
+                  <label class="block text-sm text-dark-400 mb-2">Телефон</label>
+                  <input 
+                    type="tel" 
+                    id="contactPhone" 
+                    class="w-full px-5 py-4 bg-dark-900/50 border border-dark-700/50 rounded-xl text-white placeholder-dark-500 focus:border-primary-400/50 focus:ring-1 focus:ring-primary-400/50 focus:outline-none transition-colors"
+                    placeholder="+359 888 123 456"
+                  >
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-sm text-dark-400 mb-2">Email *</label>
+                <input 
+                  type="email" 
+                  id="contactEmail" 
+                  required 
+                  class="w-full px-5 py-4 bg-dark-900/50 border border-dark-700/50 rounded-xl text-white placeholder-dark-500 focus:border-primary-400/50 focus:ring-1 focus:ring-primary-400/50 focus:outline-none transition-colors"
+                  placeholder="email@example.com"
+                >
+              </div>
+              
+              <div>
+                <label class="block text-sm text-dark-400 mb-2">Дата на сватбата</label>
+                <input 
+                  type="text" 
+                  id="contactDate" 
+                  class="w-full px-5 py-4 bg-dark-900/50 border border-dark-700/50 rounded-xl text-white placeholder-dark-500 focus:border-primary-400/50 focus:ring-1 focus:ring-primary-400/50 focus:outline-none transition-colors"
+                  placeholder="Изберете от календара или въведете"
+                >
+              </div>
+              
+              <div>
+                <label class="block text-sm text-dark-400 mb-2">Съобщение</label>
+                <textarea 
+                  id="contactMessage" 
+                  rows="4" 
+                  class="w-full px-5 py-4 bg-dark-900/50 border border-dark-700/50 rounded-xl text-white placeholder-dark-500 focus:border-primary-400/50 focus:ring-1 focus:ring-primary-400/50 focus:outline-none transition-colors resize-none"
+                  placeholder="Разкажете ни за вашия специален ден..."
+                ></textarea>
+              </div>
+              
+              <p id="formStatus" class="text-center hidden"></p>
+              
+              <button 
+                type="submit" 
+                id="contactSubmit"
+                class="w-full py-4 px-6 bg-gradient-to-r from-primary-400 to-primary-500 text-dark-950 rounded-xl font-semibold hover:shadow-lg hover:shadow-primary-500/25 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2"
+              >
+                <span>Изпрати съобщение</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 border-t border-dark-800/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-3">
+          <img src="white-1.png" alt="CreativeHub Wedding" class="h-8 w-auto opacity-70">
+          <span class="text-dark-400">© <span id="year"></span> Всички права запазени.</span>
+        </div>
+        <div class="flex items-center gap-6 text-sm text-dark-500">
+          <a href="#" class="hover:text-primary-400 transition-colors">Поверителност</a>
+          <a href="#" class="hover:text-primary-400 transition-colors">Условия</a>
+          <a href="admin-v2.html" class="hover:text-primary-400 transition-colors">Admin</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ==========================================
+    // API CONFIGURATION
+    // ==========================================
+    const API_URL = localStorage.getItem('wedding_api_url') || 'http://localhost:3000';
+    
+    // ==========================================
+    // CUSTOM CURSOR
+    // ==========================================
+    const cursor = document.getElementById('cursor');
+    const cursorDot = document.getElementById('cursorDot');
+    
+    if (cursor && cursorDot) {
+      let mouseX = 0, mouseY = 0;
+      let cursorX = 0, cursorY = 0;
+      
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.left = mouseX + 'px';
+        cursorDot.style.top = mouseY + 'px';
+      });
+      
+      function animateCursor() {
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+        requestAnimationFrame(animateCursor);
+      }
+      animateCursor();
+      
+      // Cursor effects on interactive elements
+      document.querySelectorAll('a, button, input, textarea, label').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.style.transform = 'translate(-50%, -50%) scale(1.5)');
+        el.addEventListener('mouseleave', () => cursor.style.transform = 'translate(-50%, -50%) scale(1)');
+      });
+    }
+    
+    // ==========================================
+    // NAVIGATION
+    // ==========================================
+    const navbar = document.getElementById('navbar');
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    let menuOpen = false;
+    
+    // Scroll effect
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('glass-dark', 'shadow-lg');
+      } else {
+        navbar.classList.remove('glass-dark', 'shadow-lg');
+      }
+      
+      // Parallax for hero
+      const scroll = window.scrollY;
+      document.documentElement.style.setProperty('--scroll', scroll + 'px');
+    });
+    
+    // Mobile menu toggle
+    menuToggle.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      if (menuOpen) {
+        mobileMenu.style.transform = 'translateX(0)';
+        menuToggle.querySelector('.menu-line:nth-child(1)').style.transform = 'rotate(45deg) translate(5px, 5px)';
+        menuToggle.querySelector('.menu-line:nth-child(2)').style.opacity = '0';
+        menuToggle.querySelector('.menu-line:nth-child(3)').style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        menuToggle.querySelector('.menu-line:nth-child(3)').style.width = '100%';
+      } else {
+        mobileMenu.style.transform = 'translateX(-100%)';
+        menuToggle.querySelector('.menu-line:nth-child(1)').style.transform = 'none';
+        menuToggle.querySelector('.menu-line:nth-child(2)').style.opacity = '1';
+        menuToggle.querySelector('.menu-line:nth-child(3)').style.transform = 'none';
+        menuToggle.querySelector('.menu-line:nth-child(3)').style.width = '1rem';
+      }
+    });
+    
+    // Close mobile menu on link click
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        menuOpen = false;
+        mobileMenu.style.transform = 'translateX(-100%)';
+        menuToggle.querySelector('.menu-line:nth-child(1)').style.transform = 'none';
+        menuToggle.querySelector('.menu-line:nth-child(2)').style.opacity = '1';
+        menuToggle.querySelector('.menu-line:nth-child(3)').style.transform = 'none';
+        menuToggle.querySelector('.menu-line:nth-child(3)').style.width = '1rem';
+      });
+    });
+    
+    // ==========================================
+    // SCROLL ANIMATIONS (Intersection Observer)
+    // ==========================================
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger-children').forEach(el => {
+      observer.observe(el);
+    });
+    
+    // ==========================================
+    // GALLERY
+    // ==========================================
+    const defaultPhotos = [
+      'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1606216794074-735e91aa2c92?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1591604466107-ec97de577aff?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?q=80&w=800&auto=format&fit=crop'
+    ];
+    
+    const galleryGrid = document.getElementById('galleryGrid');
+    let galleryPhotos = defaultPhotos;
+    let currentImageIndex = 0;
+    
+    async function loadGallery() {
+      try {
+        const response = await fetch(`${API_URL}/api/photos`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.length > 0) {
+            galleryPhotos = data.map(p => p.url.startsWith('http') ? p.url : `${API_URL}${p.url}`);
+          }
+        }
+      } catch (e) {
+        console.log('Using default photos');
+      }
+      
+      renderGallery();
+    }
+    
+    function renderGallery() {
+      galleryGrid.innerHTML = '';
+      galleryPhotos.forEach((url, i) => {
+        const div = document.createElement('div');
+        div.className = 'group relative aspect-[4/5] overflow-hidden rounded-2xl cursor-pointer shine';
+        div.innerHTML = `
+          <img 
+            src="${url}" 
+            alt="Wedding photo ${i + 1}" 
+            loading="lazy"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            onload="this.classList.add('loaded')"
+          >
+          <div class="absolute inset-0 bg-gradient-to-t from-dark-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
+            <div class="flex items-center gap-2 text-white text-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+              <span>Увеличи</span>
+            </div>
+          </div>
+        `;
+        div.addEventListener('click', () => openLightbox(i));
+        galleryGrid.appendChild(div);
+      });
+    }
+    
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCounter = document.getElementById('lightboxCounter');
+    
+    function openLightbox(index) {
+      currentImageIndex = index;
+      updateLightbox();
+      lightbox.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeLightbox() {
+      lightbox.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    
+    function updateLightbox() {
+      lightboxImage.src = galleryPhotos[currentImageIndex];
+      lightboxCounter.textContent = `${currentImageIndex + 1} / ${galleryPhotos.length}`;
+    }
+    
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    document.getElementById('lightboxOverlay').addEventListener('click', closeLightbox);
+    document.getElementById('lightboxPrev').addEventListener('click', () => {
+      currentImageIndex = (currentImageIndex - 1 + galleryPhotos.length) % galleryPhotos.length;
+      updateLightbox();
+    });
+    document.getElementById('lightboxNext').addEventListener('click', () => {
+      currentImageIndex = (currentImageIndex + 1) % galleryPhotos.length;
+      updateLightbox();
+    });
+    document.getElementById('openGallery').addEventListener('click', () => openLightbox(0));
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.classList.contains('hidden')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') { currentImageIndex = (currentImageIndex - 1 + galleryPhotos.length) % galleryPhotos.length; updateLightbox(); }
+      if (e.key === 'ArrowRight') { currentImageIndex = (currentImageIndex + 1) % galleryPhotos.length; updateLightbox(); }
+    });
+    
+    loadGallery();
+    
+    // ==========================================
+    // CALCULATOR
+    // ==========================================
+    const calcItems = document.querySelectorAll('.calc-item');
+    const totalPriceEl = document.getElementById('totalPrice');
+    const selectedServicesEl = document.getElementById('selectedServices');
+    const resetBtn = document.getElementById('resetCalc');
+    const presetBtns = document.querySelectorAll('.preset-btn');
+    
+    function updateCalculator() {
+      let total = 0;
+      let services = [];
+      
+      calcItems.forEach(item => {
+        if (item.checked) {
+          total += parseInt(item.dataset.price);
+          services.push(item.dataset.name);
+        }
+      });
+      
+      totalPriceEl.textContent = total.toLocaleString('bg-BG') + ' лв';
+      selectedServicesEl.textContent = services.length > 0 ? services.join(', ') : 'Няма избрани услуги';
+      
+      // Animate
+      totalPriceEl.style.transform = 'scale(1.05)';
+      setTimeout(() => totalPriceEl.style.transform = 'scale(1)', 150);
+    }
+    
+    calcItems.forEach(item => item.addEventListener('change', updateCalculator));
+    
+    resetBtn.addEventListener('click', () => {
+      calcItems.forEach(item => item.checked = false);
+      selectedDate = null;
+      selectedDateStr = null;
+      if (typeof expandedMonth !== 'undefined') expandedMonth = null;
+      updateSelectedDateDisplay();
+      renderCalendar();
+      updateCalculator();
+    });
+    
+    // Presets
+    const presets = {
+      silver: [0, 2, 3],
+      gold: [0, 2, 3, 4, 6, 8],
+      diamond: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    };
+    
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        calcItems.forEach(item => item.checked = false);
+        const indexes = presets[btn.dataset.preset];
+        indexes.forEach(i => { if (calcItems[i]) calcItems[i].checked = true; });
+        updateCalculator();
+      });
+    });
+    
+    // ==========================================
+    // CALENDAR (in Calculator)
+    // ==========================================
+    const defaultBookedDates = ['2026-03-14', '2026-03-21', '2026-04-04', '2026-05-16', '2026-06-13', '2026-06-27'];
+    const defaultLastAvailableDates = ['2026-05-30', '2026-06-07', '2026-07-25'];
+    
+    let bookedDates = defaultBookedDates;
+    let lastAvailableDates = defaultLastAvailableDates;
+    let displayMonth = new Date().getMonth();
+    let displayYear = new Date().getFullYear();
+    let selectedDate = null;
+    let selectedDateStr = null;
+    
+    const monthNames = ['Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни', 'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'];
+    const selectedDateText = document.getElementById('selectedDateText');
+    const clearDateBtn = document.getElementById('clearDate');
+    
+    function updateSelectedDateDisplay() {
+      if (selectedDate) {
+        selectedDateText.textContent = selectedDate;
+        selectedDateText.classList.remove('text-dark-400');
+        selectedDateText.classList.add('text-primary-400', 'font-medium');
+        clearDateBtn.classList.remove('hidden');
+        const contactDateField = document.getElementById('contactDate');
+        if (contactDateField) contactDateField.value = selectedDate;
+      } else {
+        selectedDateText.textContent = 'Няма избрана дата';
+        selectedDateText.classList.add('text-dark-400');
+        selectedDateText.classList.remove('text-primary-400', 'font-medium');
+        clearDateBtn.classList.add('hidden');
+        const contactDateField = document.getElementById('contactDate');
+        if (contactDateField) contactDateField.value = '';
+      }
+    }
+    
+    clearDateBtn.addEventListener('click', () => {
+      selectedDate = null;
+      selectedDateStr = null;
+      if (typeof expandedMonth !== 'undefined') expandedMonth = null;
+      updateSelectedDateDisplay();
+      renderCalendar();
+    });
+    
+    async function loadDates() {
+      try {
+        const response = await fetch(`${API_URL}/api/dates`);
+        if (response.ok) {
+          const data = await response.json();
+          bookedDates = data.bookedDates || defaultBookedDates;
+          lastAvailableDates = data.lastAvailableDates || defaultLastAvailableDates;
+        }
+      } catch (e) { console.log('Using default dates'); }
+      renderCalendar();
+    }
+    
+    function formatDate(year, month, day) {
+      return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    }
+    
+    let expandedMonth = null;
+    
+    function renderMiniMonth(year, month, index) {
+      const now = new Date();
+      const isCurrentMonth = month === now.getMonth() && year === now.getFullYear();
+      const monthKey = `${year}-${month}`;
+      const isExpanded = expandedMonth === monthKey;
+      const hasExpandedMonth = expandedMonth !== null;
+      const isOtherMonth = hasExpandedMonth && !isExpanded;
+      
+      const monthDiv = document.createElement('div');
+      monthDiv.dataset.monthKey = monthKey;
+      
+      if (isExpanded) {
+        // Expanded state - much larger, prominent
+        monthDiv.className = 'col-span-2 lg:col-span-2 bg-dark-800/95 rounded-xl p-4 ring-2 ring-primary-400 shadow-2xl shadow-primary-400/40 transition-all duration-300 z-20 relative scale-100';
+      } else if (isOtherMonth) {
+        // Other months when one is expanded - blurred and dimmed
+        monthDiv.className = 'bg-dark-800/20 rounded-lg p-2 transition-all duration-300 cursor-pointer relative opacity-40 blur-[1px] scale-95 hover:opacity-60 hover:blur-0';
+      } else if (isCurrentMonth) {
+        monthDiv.className = 'bg-primary-400/10 rounded-lg p-2 ring-2 ring-primary-400/50 transition-all duration-300 hover:scale-105 hover:z-10 hover:shadow-xl hover:shadow-primary-400/20 cursor-pointer relative';
+      } else {
+        monthDiv.className = 'bg-dark-800/30 rounded-lg p-2 transition-all duration-300 hover:scale-105 hover:z-10 hover:shadow-xl hover:shadow-black/50 hover:bg-dark-700/50 cursor-pointer relative';
+      }
+      
+      // Month header - click to expand/collapse
+      const header = document.createElement('div');
+      header.className = isExpanded
+        ? 'text-center text-sm font-semibold text-primary-400 mb-3 pb-2 border-b border-primary-400/30 cursor-pointer flex items-center justify-center gap-2'
+        : isCurrentMonth
+          ? 'text-center text-xs font-semibold text-primary-400 mb-1.5 pb-1 border-b border-primary-400/30 cursor-pointer'
+          : 'text-center text-xs font-medium text-dark-300 mb-1.5 pb-1 border-b border-dark-700/30 cursor-pointer';
+      
+      header.innerHTML = isExpanded 
+        ? `<span>${monthNames[month]} ${year}</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>`
+        : `${monthNames[month].substring(0, 3)} ${year}`;
+      
+      header.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (expandedMonth === monthKey) {
+          expandedMonth = null;
+        } else {
+          expandedMonth = monthKey;
+        }
+        renderCalendar();
+      });
+      monthDiv.appendChild(header);
+      
+      // Weekday headers
+      const weekdays = document.createElement('div');
+      weekdays.className = isExpanded ? 'grid grid-cols-7 gap-1 mb-2' : 'grid grid-cols-7 gap-px mb-1';
+      const dayLabels = isExpanded ? ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'] : ['П', 'В', 'С', 'Ч', 'П', 'С', 'Н'];
+      dayLabels.forEach(d => {
+        const wd = document.createElement('div');
+        wd.className = isExpanded ? 'text-center text-xs text-dark-400 font-medium' : 'text-center text-[8px] text-dark-600';
+        wd.textContent = d;
+        weekdays.appendChild(wd);
+      });
+      monthDiv.appendChild(weekdays);
+      
+      // Days grid
+      const grid = document.createElement('div');
+      grid.className = isExpanded ? 'grid grid-cols-7 gap-1' : 'grid grid-cols-7 gap-px';
+      
+      const firstDay = new Date(year, month, 1).getDay();
+      const startDay = firstDay === 0 ? 6 : firstDay - 1;
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const today = new Date(); today.setHours(0,0,0,0);
+      
+      for (let i = 0; i < startDay; i++) {
+        grid.appendChild(document.createElement('div'));
+      }
+      
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = formatDate(year, month, day);
+        const date = new Date(year, month, day);
+        const isPast = date < today;
+        const isToday = date.getTime() === today.getTime();
+        const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+        const isBooked = bookedDates.includes(dateStr);
+        const isLastAvailable = lastAvailableDates.includes(dateStr);
+        const isSelected = dateStr === selectedDateStr;
+        
+        const cell = document.createElement('div');
+        cell.className = isExpanded 
+          ? 'aspect-square flex items-center justify-center text-sm rounded-lg transition-all font-medium'
+          : 'aspect-square flex items-center justify-center text-[9px] rounded transition-all';
+        
+        if (isSelected) {
+          cell.classList.add('bg-primary-400', 'text-dark-950', 'font-bold');
+          if (isExpanded) cell.classList.add('ring-2', 'ring-primary-300');
+        } else if (isToday) {
+          cell.classList.add('ring-1', 'ring-white', 'text-white', 'font-bold', 'cursor-pointer');
+          if (isExpanded) cell.classList.add('hover:bg-white/20', 'ring-2');
+          else cell.classList.add('hover:bg-white/10');
+        } else if (isPast) {
+          cell.classList.add('text-dark-700');
+        } else if (isBooked) {
+          cell.classList.add('text-red-400/60');
+          if (isExpanded) cell.classList.add('bg-red-500/10');
+        } else if (isLastAvailable) {
+          cell.classList.add('text-primary-400', 'font-medium', 'cursor-pointer');
+          if (isExpanded) cell.classList.add('hover:bg-primary-400/30', 'bg-primary-400/10');
+          else cell.classList.add('hover:bg-primary-400/20');
+        } else if (isWeekend) {
+          cell.classList.add('text-green-400', 'cursor-pointer');
+          if (isExpanded) cell.classList.add('hover:bg-green-500/20', 'bg-green-500/5');
+          else cell.classList.add('hover:bg-green-500/10');
+        } else {
+          cell.classList.add('text-dark-300', 'cursor-pointer');
+          if (isExpanded) cell.classList.add('hover:bg-dark-600/50');
+          else cell.classList.add('hover:bg-dark-700/50');
+        }
+        
+        cell.textContent = day;
+        
+        if (!isPast && !isBooked) {
+          cell.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Expand this month if not already expanded
+            if (!isExpanded) {
+              expandedMonth = monthKey;
+            }
+            selectedDate = `${day} ${monthNames[month]} ${year}`;
+            selectedDateStr = dateStr;
+            updateSelectedDateDisplay();
+            renderCalendar();
+          });
+        }
+        
+        grid.appendChild(cell);
+      }
+      
+      monthDiv.appendChild(grid);
+      
+      // Click anywhere on month to expand (if not already expanded)
+      if (!isExpanded) {
+        monthDiv.addEventListener('click', () => {
+          expandedMonth = monthKey;
+          renderCalendar();
+        });
+      }
+      
+      return monthDiv;
+    }
+    
+    function renderCalendar() {
+      const grid = document.getElementById('calendarGrid');
+      const container = document.getElementById('calendarContainer');
+      grid.innerHTML = '';
+      
+      // Add/remove expanded class on container for styling
+      if (expandedMonth) {
+        container.classList.add('ring-1', 'ring-primary-400/30');
+      } else {
+        container.classList.remove('ring-1', 'ring-primary-400/30');
+      }
+      
+      // Show 4 months starting from displayMonth
+      const endMonth = displayMonth + 3;
+      document.getElementById('currentMonth').textContent = `${monthNames[displayMonth]} - ${monthNames[(displayMonth + 3) % 12]} ${displayYear}`;
+      
+      for (let i = 0; i < 4; i++) {
+        let m = displayMonth + i;
+        let y = displayYear;
+        if (m > 11) { m -= 12; y++; }
+        grid.appendChild(renderMiniMonth(y, m, i));
+      }
+    }
+    
+    document.getElementById('prevMonth').addEventListener('click', () => {
+      displayMonth -= 4; 
+      if (displayMonth < 0) { displayMonth += 12; displayYear--; }
+      renderCalendar();
+    });
+    
+    document.getElementById('nextMonth').addEventListener('click', () => {
+      displayMonth += 4; 
+      if (displayMonth > 11) { displayMonth -= 12; displayYear++; }
+      renderCalendar();
+    });
+    
+    loadDates();
+    
+    // ==========================================
+    // CONTACT FORM
+    // ==========================================
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+    
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const btn = document.getElementById('contactSubmit');
+      btn.disabled = true;
+      btn.innerHTML = '<svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg><span>Изпращане...</span>';
+      
+      const data = {
+        name: document.getElementById('contactName').value,
+        email: document.getElementById('contactEmail').value,
+        phone: document.getElementById('contactPhone').value,
+        wedding_date: document.getElementById('contactDate').value,
+        message: document.getElementById('contactMessage').value
+      };
+      
+      try {
+        const response = await fetch(`${API_URL}/api/contact`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+          formStatus.textContent = '✓ Благодарим! Ще се свържем с вас скоро.';
+          formStatus.className = 'text-center text-green-400 py-2';
+          formStatus.classList.remove('hidden');
+          contactForm.reset();
+        } else throw new Error();
+      } catch (err) {
+        formStatus.textContent = 'Грешка при изпращане. Моля, опитайте отново.';
+        formStatus.className = 'text-center text-red-400 py-2';
+        formStatus.classList.remove('hidden');
+      }
+      
+      btn.disabled = false;
+      btn.innerHTML = '<span>Изпрати съобщение</span><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>';
+      setTimeout(() => formStatus.classList.add('hidden'), 5000);
+    });
+    
+    // ==========================================
+    // FOOTER YEAR
+    // ==========================================
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // ==========================================
+    // SMOOTH SCROLL
+    // ==========================================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

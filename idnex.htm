@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="bg" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CreativeHub Wedding — Фото & Видео</title>
+  <meta name="description" content="Професионална фотография и видеография за сватби. Пакети, портфолио, конфигуратор и лесен контакт." />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              primary: '#F9C349',   // gold accent (original)
+              secondary: '#1B1B1B', // dark background sections
+              accent: '#FFB100',    // bright gold hover
+              dark: '#1B1B1B',      // main background (dark charcoal)
+              light: '#E6E6E6',     // light text
+              muted: '#B6B6B6',     // muted text
+              cream: '#F8F7F3',     // off-white for cards
+            }
+          },
+          fontFamily: {
+            display: ['"DM Sans"', 'sans-serif'],
+            sans: ['"DM Sans"', 'ui-sans-serif', 'system-ui'],
+          },
+          boxShadow: {
+            soft: '0 10px 30px rgba(249, 195, 73, 0.15)'
+          },
+          borderRadius: {
+            xl: '1rem',
+            '2xl': '1.5rem',
+            '3xl': '2rem'
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Forum&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --brand-primary:#F9C349;
+      --brand-secondary:#1B1B1B;
+      --brand-accent:#FFB100;
+      --brand-dark:#1B1B1B;
+      --brand-light:#E6E6E6;
+      --brand-muted:#B6B6B6;
+    }
+    body { background-color: var(--brand-dark); color: var(--brand-light); }
+    ::selection{ background: var(--brand-primary); color:#000 }
+  </style>
+</head>
+<body class="font-sans bg-brand-dark text-brand-light">
+  <!-- Sticky top -->
+  <header class="sticky top-0 z-50 backdrop-blur bg-brand-dark/95 border-b border-white/10 overflow-visible">
+    <div class="w-full px-4 py-1 flex items-center gap-4">
+      <img src="white-1.png" alt="CreativeHub Wedding" class="h-28 w-auto drop-shadow-lg -my-4 relative z-10 -ml-2"/>
+      <nav class="ml-auto hidden md:flex items-center gap-6 text-brand-muted">
+        <a href="#services" class="hover:text-brand-primary transition-colors">Услуги</a>
+        <a href="#portfolio" class="hover:text-brand-primary transition-colors">Портфолио</a>
+        <a href="#pricing" class="hover:text-brand-primary transition-colors">Пакети</a>
+        <a href="#config" class="hover:text-brand-primary transition-colors">Конфигуратор</a>
+        <a href="#contact" class="hover:text-brand-primary transition-colors">Контакт</a>
+      </nav>
+      <a href="#contact" class="ml-auto md:ml-2 inline-flex items-center justify-center rounded-full border border-brand-light/50 text-brand-light px-5 py-2 text-sm font-medium hover:bg-brand-light/10 transition-colors">Запази дата</a>
+    </div>
+  </header>
+
+  <!-- Video Hero Section -->
+  <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- Video Background (replace src with your video file) -->
+    <video 
+      class="absolute inset-0 w-full h-full object-cover"
+      autoplay muted loop playsinline
+      poster="https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80"
+    >
+      <!-- Add your video source here: -->
+      <!-- <source src="wedding-video.mp4" type="video/mp4"> -->
+    </video>
+    
+    <!-- Dark Overlay -->
+    <div class="absolute inset-0 bg-black/70"></div>
+    
+    <!-- Content -->
+    <div class="relative z-10 flex flex-col items-center text-center gap-4 px-4">
+      <img src="white-1.png" alt="CreativeHub Wedding Logo" class="w-64 md:w-80 h-auto object-contain select-none mb-4"/>
+      
+      <h1 class="hidden md:block text-brand-light text-2xl md:text-3xl font-semibold tracking-wider uppercase">
+        Професионална фотография и видеография
+      </h1>
+      
+      <h2 class="text-brand-light text-3xl md:text-4xl font-light tracking-wide">
+        Запазваме моменти заедно
+      </h2>
+      
+      <div class="w-24 h-px bg-brand-light/40 my-4"></div>
+      
+      <p class="text-brand-muted max-w-xl text-lg leading-relaxed">
+        Нека заедно овековечим този съкровен миг на щастие, тази неповторима тръпка, която ни кара да погледнем на света по друг начин.
+      </p>
+      
+      <div class="mt-6 flex flex-wrap justify-center gap-4">
+        <a href="#portfolio" class="rounded-full bg-brand-primary text-brand-dark px-8 py-3 font-semibold shadow-soft hover:bg-brand-accent transition-colors">Виж портфолио</a>
+        <a href="#contact" class="rounded-full border border-brand-light/50 text-brand-light px-8 py-3 font-semibold hover:bg-brand-light/10 transition-colors">Запази дата</a>
+      </div>
+    </div>
+    
+    <!-- Scroll indicator -->
+    <a href="#services" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-brand-muted hover:text-brand-primary transition-colors">
+      <span class="text-xs tracking-widest uppercase mb-2">Scroll</span>
+      <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </a>
+  </section>
+
+  <!-- Services (dark cards) -->
+  <section id="services" class="py-20 bg-brand-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-brand-muted text-sm uppercase tracking-widest text-center mb-2">Нашите услуги</p>
+      <h2 class="font-display text-3xl md:text-4xl mb-10 text-brand-light text-center uppercase tracking-wide font-bold">Фотография и видеозаснемане</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <article class="rounded-2xl p-6 bg-brand-secondary border border-white/10 hover:border-brand-primary/30 transition-colors">
+          <h3 class="font-semibold text-brand-light text-lg">Цялостно покритие</h3>
+          <p class="mt-2 text-sm text-brand-muted">До 10 часа, втори оператор при нужда, стабилизация.</p>
+        </article>
+        <article class="rounded-2xl p-6 bg-brand-secondary border border-white/10 hover:border-brand-primary/30 transition-colors">
+          <h3 class="font-semibold text-brand-light text-lg">Арт фотосесия</h3>
+          <p class="mt-2 text-sm text-brand-muted">Кадри с художествена обработка + ретуш.</p>
+        </article>
+        <article class="rounded-2xl p-6 bg-brand-secondary border border-white/10 hover:border-brand-primary/30 transition-colors">
+          <h3 class="font-semibold text-brand-light text-lg">Дрон кадри</h3>
+          <p class="mt-2 text-sm text-brand-muted">Въздушни панорами и динамични моменти от високо.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio grid -->
+  <section id="portfolio" class="py-20 bg-brand-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-brand-muted text-sm uppercase tracking-widest text-center mb-2">малка част от вашите усмивки</p>
+      <h2 class="font-display text-3xl md:text-4xl text-brand-light text-center uppercase tracking-wide font-bold mb-8">Арт галерия</h2>
+      <div class="flex items-end justify-center gap-4 mb-6">
+        <button id="openLightbox" class="inline-flex rounded-full px-6 py-2 border border-brand-light/30 hover:border-brand-primary text-brand-light hover:text-brand-primary transition-colors">Отвори като галерия</button>
+      </div>
+      <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <!-- Photos will be loaded dynamically from localStorage or defaults -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-brand-dark/95 backdrop-blur-sm"></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+      <div class="relative max-w-5xl w-full">
+        <img id="lightboxImage" src="" alt="lightbox" class="w-full max-h-[80vh] object-contain rounded-2xl shadow-soft" />
+        <button id="lbClose" class="absolute -top-4 -right-4 bg-brand-primary text-brand-dark rounded-full w-10 h-10 shadow-soft font-bold">✕</button>
+        <button id="lbPrev" class="absolute left-2 top-1/2 -translate-y-1/2 bg-brand-light/20 hover:bg-brand-primary rounded-full w-12 h-12 text-brand-light hover:text-brand-dark text-2xl transition-colors">‹</button>
+        <button id="lbNext" class="absolute right-2 top-1/2 -translate-y-1/2 bg-brand-light/20 hover:bg-brand-primary rounded-full w-12 h-12 text-brand-light hover:text-brand-dark text-2xl transition-colors">›</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wedding Configurator / Calculator -->
+  <section id="config" class="py-20 bg-brand-dark border-t border-white/5">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-display text-4xl md:text-5xl text-brand-light mb-4 uppercase tracking-wide font-bold">Сватбен конфигуратор</h2>
+        <p class="text-brand-muted">Изберете услугите, които желаете и вижте вашата индивидуална оферта</p>
+      </div>
+      
+      <div class="bg-brand-secondary rounded-3xl p-6 md:p-10 border border-white/10">
+        <!-- Photography Section -->
+        <div class="mb-8">
+          <h3 class="text-brand-primary font-semibold text-lg mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z"/></svg>
+            Фотография
+          </h3>
+          <div class="space-y-3">
+            <label class="flex items-center justify-between p-4 bg-brand-dark/50 rounded-xl cursor-pointer hover:bg-brand-dark transition-colors border border-white/5 hover:border-brand-primary/30">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" class="calc-item w-5 h-5 rounded accent-brand-primary" data-price="800" data-name="Един фотограф">
+                <span class="text-brand-light">Един фотограф (до 10 часа)</span>
+              </div>
+              <span class="text-brand-primary font-semibold">800 лв</span>
+            </label>
+            <label class="flex items-center justify-between p-4 bg-brand-dark/50 rounded-xl cursor-pointer hover:bg-brand-dark transition-colors border border-white/5 hover:border-brand-primary/30">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" class="calc-item w-5 h-5 rounded accent-brand-primary" data-price="500" data-name="Втори фотограф">
+                <span class="text-brand-light">Втори фотограф (допълнителен)</span>
+              </div>
+              <span class="text-brand-primary font-semibold">+500 лв</span>
+            </label>
+            <label class="flex items-center justify-between p-4 bg-brand-dark/50 rounded-xl cursor-pointer hover:bg-brand-dark transition-colors border border-white/5 hover:border-brand-primary/30">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" class="calc-item w-5 h-5 rounded accent-brand-primary" data-price="200" data-name="Сватбена фотосесия">
+                <span class="text-brand-light">Сватбена фотосесия</span>
+              </div>
+              <span class="text-brand-primary font-semibold">+200 лв</span>
+            </label>
+            <label class="flex items-center justify-between p-4 bg-brand-dark/50 rounded-xl cursor-pointer hover:bg-brand-dark transition-colors border border-white/5 hover:border-brand-primary/30">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" class="calc-item w-5 h-5 rounded accent-brand-primary" data-price="150" data-name="40 кадъра художествена обработка + ретуш">
+                <span class="text-brand-light">40 кадъра с художествена обработка + ретуш</span>
+              </div>
+              <span class="text-brand-primary font-semibold">+150 лв</span>
+            </label>
+          </div>
+        </div>
+        
+        <!-- Videography Section -->
+        <div class="mb-8">
+          <h3 class="text-brand-primary font-semibold text-lg mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm12.553 1.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg>
+            Видеография
+          </h3>
+          <div class="space-y-3">
+            <label class="flex items-center justify-between p-4 bg-brand-dark/50 rounded-xl cursor-pointer hover:bg-brand-dark transition-colors border border-white/5 hover:border-brand-primary/30">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" class="calc-item w-5 h-5 rounded accent-brand-primary" data-price="1200" data-name="Видеограф">
+                <span class="text-brand-light">Видеограф (до 10 часа)</span>
+              </div>
+              <span class="text-brand-primary font-semibold">1200 лв</span>
+            </label>
+            <label class="flex items-center justify-between p-4 bg-brand-dark/50 rounded-xl cursor-pointer hover:bg-brand-dark transition-colors border border-white/5 hover:border-brand-primary/30">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" class="calc-item w-5 h-5 rounded accent-brand-primary" data-price="300" data-name="Кратък сватбен трейлър">
+                <span class="text-brand-light">Кратък сватбен трейлър (2-3 мин)</span>
+              </div>
+              <span class="text-brand-primary font-semibold">+300 лв</span>
+            </label>
+            <label class="flex items-center justify-between p-4 bg-brand-dark/50 rounded-xl cursor-pointer hover:bg-brand-dark transition-colors border border-white/5 hover:border-brand-primary/30">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" class="calc-item w-5 h-5 rounded accent-brand-primary" data-price="500" data-name="Сватбен филм">
+                <span class="text-brand-light">Сватбен филм преразказващ деня (10-15 мин)</span>
+              </div>
+              <span class="text-brand-primary font-semibold">+500 лв</span>
+            </label>
+            <label class="flex items-center justify-between p-4 bg-brand-dark/50 rounded-xl cursor-pointer hover:bg-brand-dark transition-colors border border-white/5 hover:border-brand-primary/30">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" class="calc-item w-5 h-5 rounded accent-brand-primary" data-price="400" data-name="Любовна история">
+                <span class="text-brand-light">Любовна история (младоженецът краде булката)</span>
+              </div>
+              <span class="text-brand-primary font-semibold">+400 лв</span>
+            </label>
+          </div>
+        </div>
+        
+        <!-- Extras Section -->
+        <div class="mb-8">
+          <h3 class="text-brand-primary font-semibold text-lg mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zm7-10a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z"/></svg>
+            Допълнителни услуги
+          </h3>
+          <div class="space-y-3">
+            <label class="flex items-center justify-between p-4 bg-brand-dark/50 rounded-xl cursor-pointer hover:bg-brand-dark transition-colors border border-white/5 hover:border-brand-primary/30">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" class="calc-item w-5 h-5 rounded accent-brand-primary" data-price="250" data-name="Въздушни кадри с дрон">
+                <span class="text-brand-light">Въздушни кадри с дрон</span>
+              </div>
+              <span class="text-brand-primary font-semibold">+250 лв</span>
+            </label>
+            <label class="flex items-center justify-between p-4 bg-brand-dark/50 rounded-xl cursor-pointer hover:bg-brand-dark transition-colors border border-white/5 hover:border-brand-primary/30">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" class="calc-item w-5 h-5 rounded accent-brand-primary" data-price="100" data-name="Видеостабилизатор">
+                <span class="text-brand-light">Видеостабилизатор (Gimbal)</span>
+              </div>
+              <span class="text-brand-primary font-semibold">+100 лв</span>
+            </label>
+            <label class="flex items-center justify-between p-4 bg-brand-dark/50 rounded-xl cursor-pointer hover:bg-brand-dark transition-colors border border-white/5 hover:border-brand-primary/30">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" class="calc-item w-5 h-5 rounded accent-brand-primary" data-price="150" data-name="Професионален монтаж и звуков дизайн">
+                <span class="text-brand-light">Професионален монтаж и звуков дизайн</span>
+              </div>
+              <span class="text-brand-primary font-semibold">+150 лв</span>
+            </label>
+            <label class="flex items-center justify-between p-4 bg-brand-dark/50 rounded-xl cursor-pointer hover:bg-brand-dark transition-colors border border-white/5 hover:border-brand-primary/30">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" class="calc-item w-5 h-5 rounded accent-brand-primary" data-price="50" data-name="Линк за споделяне">
+                <span class="text-brand-light">Линк с материалите за споделяне с близки</span>
+              </div>
+              <span class="text-brand-primary font-semibold">+50 лв</span>
+            </label>
+            <label class="flex items-center justify-between p-4 bg-brand-dark/50 rounded-xl cursor-pointer hover:bg-brand-dark transition-colors border border-white/5 hover:border-brand-primary/30">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" class="calc-item w-5 h-5 rounded accent-brand-primary" data-price="100" data-name="Допълнителен час">
+                <span class="text-brand-light">Допълнителен час (над 10-те часа)</span>
+              </div>
+              <span class="text-brand-primary font-semibold">+100 лв/час</span>
+            </label>
+          </div>
+        </div>
+        
+        <!-- Summary -->
+        <div class="border-t border-white/10 pt-6">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <p class="text-brand-muted text-sm mb-1">Избрани услуги:</p>
+              <p id="selectedServices" class="text-brand-light text-sm">Няма избрани услуги</p>
+            </div>
+            <div class="text-right">
+              <p class="text-brand-muted text-sm">Обща сума:</p>
+              <p id="totalPrice" class="text-4xl font-bold text-brand-primary">0 лв</p>
+            </div>
+          </div>
+          
+          <div class="mt-6 flex flex-col sm:flex-row gap-3">
+            <button id="resetCalc" class="flex-1 py-3 px-6 rounded-full border border-white/20 text-brand-light font-semibold hover:bg-white/5 transition-colors">
+              Изчисти всичко
+            </button>
+            <a href="#contact" class="flex-1 py-3 px-6 rounded-full bg-[#DBDBDB] text-[#727272] font-semibold text-center hover:bg-brand-primary hover:text-brand-dark transition-colors">
+              Изпрати запитване
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Quick Package Presets -->
+      <div class="mt-8 grid md:grid-cols-3 gap-4">
+        <button class="preset-btn p-4 rounded-2xl bg-[#787373]/50 border border-[#787373]/30 hover:border-brand-primary/50 transition-all text-left" data-preset="silver">
+          <span class="block text-brand-light font-bold text-lg">SILVER</span>
+          <span class="block text-brand-muted text-sm">2 фотографа</span>
+          <span class="block text-brand-primary font-bold mt-2">1390 лв</span>
+        </button>
+        <button class="preset-btn p-4 rounded-2xl bg-[#ccac00]/30 border border-[#ccac00]/30 hover:border-brand-primary/50 transition-all text-left" data-preset="gold">
+          <span class="block text-brand-light font-bold text-lg">GOLD</span>
+          <span class="block text-brand-muted text-sm">1 фотограф + 1 видеограф + дрон</span>
+          <span class="block text-brand-primary font-bold mt-2">2590 лв</span>
+        </button>
+        <button class="preset-btn p-4 rounded-2xl bg-[#03677e]/40 border border-[#03677e]/30 hover:border-brand-primary/50 transition-all text-left" data-preset="diamond">
+          <span class="block text-brand-light font-bold text-lg">DIAMOND</span>
+          <span class="block text-brand-muted text-sm">2 фотографа + 1 видеограф + всичко</span>
+          <span class="block text-brand-primary font-bold mt-2">3190 лв</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Availability Calendar Section -->
+  <section id="availability" class="py-20 bg-brand-secondary border-t border-white/5">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <p class="text-brand-muted text-sm uppercase tracking-widest mb-2">планирайте вашия ден</p>
+        <h2 class="font-display text-3xl md:text-4xl text-brand-light mb-4 uppercase tracking-wide font-bold">Свободни дати</h2>
+        <p class="text-brand-muted">Вижте нашата наличност и изберете перфектната дата за вашата сватба</p>
+      </div>
+      
+      <div class="bg-brand-dark rounded-3xl p-6 md:p-8 border border-white/10">
+        <!-- Calendar Navigation -->
+        <div class="flex items-center justify-between mb-6">
+          <button id="prevMonth" class="p-2 rounded-full hover:bg-white/10 transition-colors text-brand-light">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <h3 id="currentMonth" class="text-xl font-bold text-brand-light"></h3>
+          <button id="nextMonth" class="p-2 rounded-full hover:bg-white/10 transition-colors text-brand-light">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+        
+        <!-- Weekday Headers -->
+        <div class="grid grid-cols-7 gap-1 mb-2">
+          <div class="text-center text-brand-muted text-sm py-2">Пн</div>
+          <div class="text-center text-brand-muted text-sm py-2">Вт</div>
+          <div class="text-center text-brand-muted text-sm py-2">Ср</div>
+          <div class="text-center text-brand-muted text-sm py-2">Чт</div>
+          <div class="text-center text-brand-muted text-sm py-2">Пт</div>
+          <div class="text-center text-brand-muted text-sm py-2">Сб</div>
+          <div class="text-center text-brand-muted text-sm py-2">Нд</div>
+        </div>
+        
+        <!-- Calendar Grid -->
+        <div id="calendarGrid" class="grid grid-cols-7 gap-1">
+          <!-- Days will be generated by JavaScript -->
+        </div>
+        
+        <!-- Legend -->
+        <div class="flex flex-wrap items-center justify-center gap-6 mt-6 pt-6 border-t border-white/10">
+          <div class="flex items-center gap-2">
+            <span class="w-4 h-4 rounded-full bg-green-500"></span>
+            <span class="text-brand-muted text-sm">Свободна дата</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-4 h-4 rounded-full bg-red-500"></span>
+            <span class="text-brand-muted text-sm">Заета дата</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-4 h-4 rounded-full bg-brand-primary"></span>
+            <span class="text-brand-muted text-sm">Последна свободна</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 bg-brand-dark border-t border-white/5">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-brand-muted text-sm uppercase tracking-widest mb-2">свържете се с нас</p>
+      <h2 class="font-display text-3xl md:text-4xl text-brand-light mb-4 uppercase tracking-wide font-bold">Контактна форма</h2>
+      <p class="text-brand-muted mb-8">Имате въпроси или искате да запазите дата? Пишете ни!</p>
+      <form id="contactForm" class="space-y-4 text-left">
+        <div class="grid md:grid-cols-2 gap-4">
+          <input type="text" id="contactName" placeholder="Вашето име" required class="w-full px-4 py-3 rounded-xl bg-[#DBDBDB] border-0 text-brand-dark placeholder-brand-dark/50 focus:ring-2 focus:ring-brand-primary focus:outline-none">
+          <input type="email" id="contactEmail" placeholder="Email адрес" required class="w-full px-4 py-3 rounded-xl bg-[#DBDBDB] border-0 text-brand-dark placeholder-brand-dark/50 focus:ring-2 focus:ring-brand-primary focus:outline-none">
+        </div>
+        <input type="tel" id="contactPhone" placeholder="Телефон" class="w-full px-4 py-3 rounded-xl bg-[#DBDBDB] border-0 text-brand-dark placeholder-brand-dark/50 focus:ring-2 focus:ring-brand-primary focus:outline-none">
+        <input type="text" id="contactDate" placeholder="Дата на сватбата" class="w-full px-4 py-3 rounded-xl bg-[#DBDBDB] border-0 text-brand-dark placeholder-brand-dark/50 focus:ring-2 focus:ring-brand-primary focus:outline-none">
+        <textarea id="contactMessage" rows="4" placeholder="Вашето съобщение..." class="w-full px-4 py-3 rounded-xl bg-[#DBDBDB] border-0 text-brand-dark placeholder-brand-dark/50 focus:ring-2 focus:ring-brand-primary focus:outline-none resize-none"></textarea>
+        <p id="formStatus" class="text-center hidden"></p>
+        <button type="submit" id="contactSubmit" class="w-full py-3 px-6 rounded-full bg-[#DBDBDB] text-[#727272] font-semibold hover:bg-brand-primary hover:text-brand-dark transition-colors">
+          Изпрати съобщение
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-10 bg-brand-dark border-t border-white/10 text-center">
+    <p class="text-sm text-brand-muted">© <span id="year"></span> CreativeHub — Wedding</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ==========================================
+    // API CONFIGURATION
+    // ==========================================
+    // Change this to your backend URL when deployed
+    const API_URL = localStorage.getItem('wedding_api_url') || 'http://localhost:3000';
+    
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // ==========================================
+    // GALLERY - Load from API or defaults
+    // ==========================================
+    const defaultPhotos = [
+      'https://images.unsplash.com/photo-1494961920560-3fd06f38f965?q=80&w=1600&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1600&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=1600&auto=format&fit=crop'
+    ];
+    
+    const grid = document.getElementById('galleryGrid');
+    
+    async function loadGallery() {
+      let photos = defaultPhotos;
+      
+      try {
+        const response = await fetch(`${API_URL}/api/photos`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.length > 0) {
+            photos = data.map(p => p.url.startsWith('http') ? p.url : `${API_URL}${p.url}`);
+          }
+        }
+      } catch (e) {
+        console.log('Using default photos (API not available)');
+      }
+      
+      grid.innerHTML = '';
+      photos.forEach((url, i) => {
+        const img = document.createElement('img');
+        img.className = 'gallery-item rounded-2xl w-full h-48 object-cover cursor-zoom-in hover:scale-105 transition-transform';
+        img.src = url;
+        img.alt = `gallery${i + 1}`;
+        grid.appendChild(img);
+      });
+      
+      initLightbox();
+    }
+    
+    loadGallery();
+    
+    // Gallery Lightbox
+    function initLightbox() {
+      const items = [...grid.querySelectorAll('.gallery-item')];
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lightboxImage');
+      const lbPrev = document.getElementById('lbPrev');
+      const lbNext = document.getElementById('lbNext');
+      const lbClose = document.getElementById('lbClose');
+      let idx = 0;
+      function show(i){ idx = (i + items.length) % items.length; lbImg.src = items[idx].src; lb.classList.remove('hidden'); document.body.style.overflow='hidden'; }
+      function hide(){ lb.classList.add('hidden'); document.body.style.overflow=''; }
+      items.forEach((el,i)=> el.addEventListener('click', ()=> show(i)) );
+      document.getElementById('openLightbox').addEventListener('click', ()=> show(0));
+      lbPrev.addEventListener('click', ()=> show(idx-1));
+      lbNext.addEventListener('click', ()=> show(idx+1));
+      lbClose.addEventListener('click', hide);
+      lb.addEventListener('click', (e)=>{ if(e.target===lb) hide(); });
+      document.addEventListener('keydown', (e)=>{
+        if(lb.classList.contains('hidden')) return;
+        if(e.key==='Escape') hide();
+        if(e.key==='ArrowRight') show(idx+1);
+        if(e.key==='ArrowLeft') show(idx-1);
+      });
+    }
+    
+    // Wedding Calculator
+    const calcItems = document.querySelectorAll('.calc-item');
+    const totalPriceEl = document.getElementById('totalPrice');
+    const selectedServicesEl = document.getElementById('selectedServices');
+    const resetBtn = document.getElementById('resetCalc');
+    const presetBtns = document.querySelectorAll('.preset-btn');
+    
+    function updateCalculator() {
+      let total = 0;
+      let services = [];
+      
+      calcItems.forEach(item => {
+        if (item.checked) {
+          total += parseInt(item.dataset.price);
+          services.push(item.dataset.name);
+        }
+      });
+      
+      totalPriceEl.textContent = total + ' лв';
+      selectedServicesEl.textContent = services.length > 0 ? services.join(', ') : 'Няма избрани услуги';
+      
+      // Animate price change
+      totalPriceEl.classList.add('scale-110');
+      setTimeout(() => totalPriceEl.classList.remove('scale-110'), 150);
+    }
+    
+    calcItems.forEach(item => {
+      item.addEventListener('change', updateCalculator);
+    });
+    
+    resetBtn.addEventListener('click', () => {
+      calcItems.forEach(item => item.checked = false);
+      updateCalculator();
+    });
+    
+    // Preset packages
+    const presets = {
+      silver: [0, 1, 2, 3], // indexes of checkboxes for Silver package
+      gold: [0, 2, 3, 4, 5, 10, 11], // Gold package
+      diamond: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] // Diamond - all
+    };
+    
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Reset all first
+        calcItems.forEach(item => item.checked = false);
+        
+        const preset = btn.dataset.preset;
+        const indexes = presets[preset];
+        
+        indexes.forEach(i => {
+          if (calcItems[i]) calcItems[i].checked = true;
+        });
+        
+        updateCalculator();
+        
+        // Scroll to calculator
+        document.getElementById('config').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+    
+    // Add transition for price
+    totalPriceEl.style.transition = 'transform 0.15s ease';
+    
+    // ==========================================
+    // AVAILABILITY CALENDAR
+    // ==========================================
+    
+    // Default dates (used when API is not available)
+    const defaultBookedDates = [
+      '2026-03-14', '2026-03-21', '2026-04-04', '2026-04-18',
+      '2026-05-02', '2026-05-16', '2026-05-23', '2026-06-06',
+      '2026-06-13', '2026-06-20', '2026-06-27', '2026-07-04',
+    ];
+    
+    const defaultLastAvailableDates = [
+      '2026-05-30', '2026-06-07', '2026-07-25', '2026-08-29',
+    ];
+    
+    let bookedDates = defaultBookedDates;
+    let lastAvailableDates = defaultLastAvailableDates;
+    
+    const calendarGrid = document.getElementById('calendarGrid');
+    const currentMonthEl = document.getElementById('currentMonth');
+    const prevMonthBtn = document.getElementById('prevMonth');
+    const nextMonthBtn = document.getElementById('nextMonth');
+    
+    const monthNames = ['Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни', 'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'];
+    
+    let currentDate = new Date();
+    let displayMonth = currentDate.getMonth();
+    let displayYear = currentDate.getFullYear();
+    
+    // Load dates from API
+    async function loadDates() {
+      try {
+        const response = await fetch(`${API_URL}/api/dates`);
+        if (response.ok) {
+          const data = await response.json();
+          bookedDates = data.bookedDates || defaultBookedDates;
+          lastAvailableDates = data.lastAvailableDates || defaultLastAvailableDates;
+        }
+      } catch (e) {
+        console.log('Using default dates (API not available)');
+      }
+      renderCalendar();
+    }
+    
+    function formatDate(year, month, day) {
+      return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    }
+    
+    function isBooked(dateStr) {
+      return bookedDates.includes(dateStr);
+    }
+    
+    function isLastAvailable(dateStr) {
+      return lastAvailableDates.includes(dateStr);
+    }
+    
+    function isPastDate(year, month, day) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const checkDate = new Date(year, month, day);
+      return checkDate < today;
+    }
+    
+    function isWeekend(year, month, day) {
+      const date = new Date(year, month, day);
+      const dayOfWeek = date.getDay();
+      return dayOfWeek === 0 || dayOfWeek === 6;
+    }
+    
+    function renderCalendar() {
+      calendarGrid.innerHTML = '';
+      currentMonthEl.textContent = `${monthNames[displayMonth]} ${displayYear}`;
+      
+      const firstDay = new Date(displayYear, displayMonth, 1).getDay();
+      const startDay = firstDay === 0 ? 6 : firstDay - 1;
+      const daysInMonth = new Date(displayYear, displayMonth + 1, 0).getDate();
+      
+      for (let i = 0; i < startDay; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.className = 'aspect-square';
+        calendarGrid.appendChild(emptyCell);
+      }
+      
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = formatDate(displayYear, displayMonth, day);
+        const cell = document.createElement('div');
+        const isPast = isPastDate(displayYear, displayMonth, day);
+        const weekend = isWeekend(displayYear, displayMonth, day);
+        
+        let statusClass = '';
+        let statusIndicator = '';
+        
+        if (isPast) {
+          statusClass = 'opacity-30 cursor-not-allowed';
+        } else if (isBooked(dateStr)) {
+          statusClass = 'cursor-not-allowed';
+          statusIndicator = '<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-red-500"></span>';
+        } else if (isLastAvailable(dateStr)) {
+          statusClass = 'cursor-pointer hover:bg-brand-primary/20';
+          statusIndicator = '<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-brand-primary animate-pulse"></span>';
+        } else if (weekend) {
+          statusClass = 'cursor-pointer hover:bg-green-500/20';
+          statusIndicator = '<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-green-500"></span>';
+        } else {
+          statusClass = 'cursor-pointer hover:bg-white/5';
+        }
+        
+        cell.className = `aspect-square flex items-center justify-center relative rounded-lg transition-colors ${statusClass}`;
+        cell.innerHTML = `<span class="text-brand-light ${isPast ? 'text-brand-muted' : ''}">${day}</span>${statusIndicator}`;
+        
+        if (!isPast && !isBooked(dateStr)) {
+          cell.addEventListener('click', () => {
+            const dateInput = document.getElementById('contactDate');
+            if (dateInput) {
+              dateInput.value = `${day} ${monthNames[displayMonth]} ${displayYear}`;
+              document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        }
+        
+        calendarGrid.appendChild(cell);
+      }
+    }
+    
+    prevMonthBtn.addEventListener('click', () => {
+      displayMonth--;
+      if (displayMonth < 0) { displayMonth = 11; displayYear--; }
+      renderCalendar();
+    });
+    
+    nextMonthBtn.addEventListener('click', () => {
+      displayMonth++;
+      if (displayMonth > 11) { displayMonth = 0; displayYear++; }
+      renderCalendar();
+    });
+    
+    // Initialize calendar
+    loadDates();
+    
+    // ==========================================
+    // CONTACT FORM
+    // ==========================================
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+    
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('contactSubmit');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Изпращане...';
+      
+      const data = {
+        name: document.getElementById('contactName').value,
+        email: document.getElementById('contactEmail').value,
+        phone: document.getElementById('contactPhone').value,
+        wedding_date: document.getElementById('contactDate').value,
+        message: document.getElementById('contactMessage').value
+      };
+      
+      try {
+        const response = await fetch(`${API_URL}/api/contact`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+          formStatus.textContent = 'Благодарим! Съобщението е изпратено успешно.';
+          formStatus.className = 'text-center text-green-400';
+          formStatus.classList.remove('hidden');
+          contactForm.reset();
+        } else {
+          throw new Error('Server error');
+        }
+      } catch (err) {
+        formStatus.textContent = 'Грешка при изпращане. Моля, опитайте отново.';
+        formStatus.className = 'text-center text-red-400';
+        formStatus.classList.remove('hidden');
+      }
+      
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Изпрати съобщение';
+      
+      setTimeout(() => formStatus.classList.add('hidden'), 5000);
+    });
+  </script>
+</body>
+</html>

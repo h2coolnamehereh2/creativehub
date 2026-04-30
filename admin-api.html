@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - CreativeHub Wedding</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-primary': '#F9C349',
+            'brand-accent': '#FFB100',
+            'brand-dark': '#1B1B1B',
+            'brand-secondary': '#252525',
+            'brand-light': '#E6E6E6',
+            'brand-muted': '#B6B6B6',
+          },
+          fontFamily: {
+            'display': ['DM Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'DM Sans', sans-serif; }
+  </style>
+</head>
+<body class="bg-brand-dark min-h-screen">
+  
+  <!-- API URL Configuration Banner -->
+  <div id="configBanner" class="bg-brand-primary/20 border-b border-brand-primary/30 py-2 px-4 text-center">
+    <span class="text-brand-primary text-sm">API URL: </span>
+    <input type="text" id="apiUrlInput" value="http://localhost:3000" class="bg-brand-dark border border-brand-primary/30 rounded px-2 py-1 text-sm text-brand-light w-64">
+    <button onclick="saveApiUrl()" class="ml-2 px-3 py-1 bg-brand-primary text-brand-dark rounded text-sm font-semibold">Запази</button>
+  </div>
+
+  <!-- Login Screen -->
+  <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
+    <div class="bg-brand-secondary rounded-3xl p-8 w-full max-w-md border border-white/10">
+      <h1 class="text-2xl font-bold text-brand-light text-center mb-2">Admin Panel</h1>
+      <p class="text-brand-muted text-center mb-6">CreativeHub Wedding</p>
+      
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="block text-brand-muted text-sm mb-2">Потребител</label>
+          <input type="text" id="usernameInput" value="admin" class="w-full px-4 py-3 rounded-xl bg-brand-dark border border-white/10 text-brand-light focus:ring-2 focus:ring-brand-primary focus:outline-none" placeholder="admin">
+        </div>
+        <div>
+          <label class="block text-brand-muted text-sm mb-2">Парола</label>
+          <input type="password" id="passwordInput" class="w-full px-4 py-3 rounded-xl bg-brand-dark border border-white/10 text-brand-light focus:ring-2 focus:ring-brand-primary focus:outline-none" placeholder="Въведете парола">
+        </div>
+        <p id="loginError" class="text-red-500 text-sm hidden"></p>
+        <button type="submit" class="w-full py-3 px-6 rounded-full bg-brand-primary text-brand-dark font-semibold hover:bg-brand-accent transition-colors">
+          Вход
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard -->
+  <div id="adminDashboard" class="hidden">
+    <!-- Header -->
+    <header class="bg-brand-secondary border-b border-white/10 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+        <h1 class="text-xl font-bold text-brand-light">Admin Panel</h1>
+        <div class="flex items-center gap-4">
+          <span id="unreadBadge" class="hidden px-2 py-1 bg-red-500 text-white text-xs rounded-full"></span>
+          <a href="idnex.htm" target="_blank" class="text-brand-muted hover:text-brand-primary transition-colors text-sm">
+            Виж сайта →
+          </a>
+          <button id="logoutBtn" class="px-4 py-2 rounded-full border border-white/20 text-brand-light text-sm hover:bg-white/5 transition-colors">
+            Изход
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+      <!-- Tabs -->
+      <div class="flex gap-2 mb-8 border-b border-white/10 overflow-x-auto">
+        <button class="tab-btn px-6 py-3 text-brand-light font-semibold border-b-2 border-brand-primary whitespace-nowrap" data-tab="calendar">
+          📅 Календар
+        </button>
+        <button class="tab-btn px-6 py-3 text-brand-muted font-semibold border-b-2 border-transparent hover:text-brand-light transition-colors whitespace-nowrap" data-tab="photos">
+          🖼️ Снимки
+        </button>
+        <button class="tab-btn px-6 py-3 text-brand-muted font-semibold border-b-2 border-transparent hover:text-brand-light transition-colors whitespace-nowrap" data-tab="messages">
+          ✉️ Съобщения
+        </button>
+        <button class="tab-btn px-6 py-3 text-brand-muted font-semibold border-b-2 border-transparent hover:text-brand-light transition-colors whitespace-nowrap" data-tab="settings">
+          ⚙️ Настройки
+        </button>
+      </div>
+
+      <!-- Calendar Tab -->
+      <div id="calendarTab" class="tab-content">
+        <div class="grid lg:grid-cols-3 gap-8">
+          <!-- Calendar -->
+          <div class="lg:col-span-2">
+            <div class="bg-brand-secondary rounded-3xl p-6 border border-white/10">
+              <div class="flex items-center justify-between mb-6">
+                <button id="adminPrevMonth" class="p-2 rounded-full hover:bg-white/10 transition-colors text-brand-light">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <h3 id="adminCurrentMonth" class="text-xl font-bold text-brand-light"></h3>
+                <button id="adminNextMonth" class="p-2 rounded-full hover:bg-white/10 transition-colors text-brand-light">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+              
+              <div class="grid grid-cols-7 gap-1 mb-2">
+                <div class="text-center text-brand-muted text-sm py-2">Пн</div>
+                <div class="text-center text-brand-muted text-sm py-2">Вт</div>
+                <div class="text-center text-brand-muted text-sm py-2">Ср</div>
+                <div class="text-center text-brand-muted text-sm py-2">Чт</div>
+                <div class="text-center text-brand-muted text-sm py-2">Пт</div>
+                <div class="text-center text-brand-muted text-sm py-2">Сб</div>
+                <div class="text-center text-brand-muted text-sm py-2">Нд</div>
+              </div>
+              
+              <div id="adminCalendarGrid" class="grid grid-cols-7 gap-1"></div>
+              
+              <div class="flex flex-wrap items-center gap-4 mt-6 pt-6 border-t border-white/10">
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-green-500"></span>
+                  <span class="text-brand-muted text-sm">Свободна</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-red-500"></span>
+                  <span class="text-brand-muted text-sm">Заета</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-brand-primary"></span>
+                  <span class="text-brand-muted text-sm">Последна свободна</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Selected Date Panel -->
+          <div>
+            <div class="bg-brand-secondary rounded-3xl p-6 border border-white/10 sticky top-24">
+              <h4 class="text-lg font-bold text-brand-light mb-4">Избрана дата</h4>
+              <p id="selectedDateDisplay" class="text-brand-muted mb-6">Кликнете върху дата от календара</p>
+              
+              <div id="dateControls" class="hidden space-y-3">
+                <button id="setFree" class="w-full py-3 px-4 rounded-xl bg-green-500/20 border border-green-500/30 text-green-400 font-semibold hover:bg-green-500/30 transition-colors">
+                  ✓ Маркирай като свободна
+                </button>
+                <button id="setBooked" class="w-full py-3 px-4 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 font-semibold hover:bg-red-500/30 transition-colors">
+                  ✗ Маркирай като заета
+                </button>
+                <button id="setLastAvailable" class="w-full py-3 px-4 rounded-xl bg-brand-primary/20 border border-brand-primary/30 text-brand-primary font-semibold hover:bg-brand-primary/30 transition-colors">
+                  ⚠ Последна свободна
+                </button>
+              </div>
+              
+              <!-- Quick Stats -->
+              <div class="mt-8 pt-6 border-t border-white/10">
+                <h5 class="text-brand-muted text-sm mb-4">Статистики</h5>
+                <div class="space-y-2">
+                  <div class="flex justify-between">
+                    <span class="text-brand-muted text-sm">Заети дати:</span>
+                    <span id="bookedCount" class="text-red-400 font-semibold">0</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-brand-muted text-sm">Последни свободни:</span>
+                    <span id="lastAvailableCount" class="text-brand-primary font-semibold">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photos Tab -->
+      <div id="photosTab" class="tab-content hidden">
+        <div class="bg-brand-secondary rounded-3xl p-6 border border-white/10">
+          <h3 class="text-xl font-bold text-brand-light mb-6">Управление на галерията</h3>
+          
+          <!-- Upload Photo -->
+          <div class="mb-8 grid md:grid-cols-2 gap-6">
+            <div class="p-4 bg-brand-dark rounded-xl border border-white/10">
+              <h4 class="text-brand-light font-semibold mb-4">Качи снимка</h4>
+              <input type="file" id="photoFileInput" accept="image/*" class="w-full text-brand-muted file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-brand-primary file:text-brand-dark file:font-semibold file:cursor-pointer">
+              <button id="uploadPhotoBtn" class="mt-4 w-full py-3 rounded-xl bg-brand-primary text-brand-dark font-semibold hover:bg-brand-accent transition-colors">
+                Качи
+              </button>
+            </div>
+            
+            <div class="p-4 bg-brand-dark rounded-xl border border-white/10">
+              <h4 class="text-brand-light font-semibold mb-4">Добави от URL</h4>
+              <input type="text" id="photoUrlInput" placeholder="https://example.com/image.jpg" class="w-full px-4 py-3 rounded-xl bg-brand-secondary border border-white/10 text-brand-light focus:ring-2 focus:ring-brand-primary focus:outline-none">
+              <button id="addPhotoUrlBtn" class="mt-4 w-full py-3 rounded-xl bg-brand-primary text-brand-dark font-semibold hover:bg-brand-accent transition-colors">
+                Добави
+              </button>
+            </div>
+          </div>
+          
+          <!-- Photo Grid -->
+          <div>
+            <h4 class="text-brand-light font-semibold mb-4">Текущи снимки</h4>
+            <div id="photoGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"></div>
+            <p id="noPhotosMsg" class="text-brand-muted text-center py-8 hidden">Няма добавени снимки</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Messages Tab -->
+      <div id="messagesTab" class="tab-content hidden">
+        <div class="bg-brand-secondary rounded-3xl p-6 border border-white/10">
+          <h3 class="text-xl font-bold text-brand-light mb-6">Получени съобщения</h3>
+          <div id="messagesList" class="space-y-4"></div>
+          <p id="noMessagesMsg" class="text-brand-muted text-center py-8 hidden">Няма получени съобщения</p>
+        </div>
+      </div>
+
+      <!-- Settings Tab -->
+      <div id="settingsTab" class="tab-content hidden">
+        <div class="max-w-2xl">
+          <div class="bg-brand-secondary rounded-3xl p-6 border border-white/10 mb-6">
+            <h3 class="text-xl font-bold text-brand-light mb-6">Смяна на парола</h3>
+            <form id="changePasswordForm" class="space-y-4">
+              <div>
+                <label class="block text-brand-muted text-sm mb-2">Текуща парола</label>
+                <input type="password" id="currentPassword" class="w-full px-4 py-3 rounded-xl bg-brand-dark border border-white/10 text-brand-light focus:ring-2 focus:ring-brand-primary focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-brand-muted text-sm mb-2">Нова парола</label>
+                <input type="password" id="newPassword" class="w-full px-4 py-3 rounded-xl bg-brand-dark border border-white/10 text-brand-light focus:ring-2 focus:ring-brand-primary focus:outline-none">
+              </div>
+              <button type="submit" class="w-full py-3 px-6 rounded-xl bg-brand-primary text-brand-dark font-semibold hover:bg-brand-accent transition-colors">
+                Промени паролата
+              </button>
+            </form>
+          </div>
+          
+          <div class="bg-brand-secondary rounded-3xl p-6 border border-white/10">
+            <h3 class="text-xl font-bold text-brand-light mb-4">API информация</h3>
+            <div class="space-y-2 text-brand-muted text-sm">
+              <p><strong>API URL:</strong> <span id="currentApiUrl"></span></p>
+              <p><strong>Статус:</strong> <span id="apiStatus" class="text-green-400">Свързан</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // ==========================================
+    // CONFIGURATION
+    // ==========================================
+    let API_URL = localStorage.getItem('wedding_api_url') || 'http://localhost:3000';
+    let authToken = localStorage.getItem('wedding_auth_token');
+    
+    function saveApiUrl() {
+      API_URL = document.getElementById('apiUrlInput').value.replace(/\/$/, '');
+      localStorage.setItem('wedding_api_url', API_URL);
+      document.getElementById('currentApiUrl').textContent = API_URL;
+      alert('API URL запазен!');
+    }
+    
+    document.getElementById('apiUrlInput').value = API_URL;
+    
+    // ==========================================
+    // API HELPER
+    // ==========================================
+    async function api(endpoint, options = {}) {
+      const url = `${API_URL}/api${endpoint}`;
+      const headers = {
+        'Content-Type': 'application/json',
+        ...options.headers
+      };
+      
+      if (authToken) {
+        headers['Authorization'] = `Bearer ${authToken}`;
+      }
+      
+      const response = await fetch(url, {
+        ...options,
+        headers
+      });
+      
+      if (response.status === 401 || response.status === 403) {
+        logout();
+        throw new Error('Session expired');
+      }
+      
+      return response.json();
+    }
+    
+    // ==========================================
+    // AUTH
+    // ==========================================
+    const loginScreen = document.getElementById('loginScreen');
+    const adminDashboard = document.getElementById('adminDashboard');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    async function checkAuth() {
+      if (!authToken) return false;
+      
+      try {
+        await api('/auth/verify');
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+    
+    async function init() {
+      if (await checkAuth()) {
+        showDashboard();
+      }
+    }
+    
+    function showDashboard() {
+      loginScreen.classList.add('hidden');
+      adminDashboard.classList.remove('hidden');
+      document.getElementById('currentApiUrl').textContent = API_URL;
+      loadDates();
+      loadPhotos();
+      loadMessages();
+    }
+    
+    function logout() {
+      authToken = null;
+      localStorage.removeItem('wedding_auth_token');
+      location.reload();
+    }
+    
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('usernameInput').value;
+      const password = document.getElementById('passwordInput').value;
+      
+      try {
+        const data = await api('/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ username, password })
+        });
+        
+        authToken = data.token;
+        localStorage.setItem('wedding_auth_token', authToken);
+        loginError.classList.add('hidden');
+        showDashboard();
+      } catch (e) {
+        loginError.textContent = 'Грешно потребителско име или парола';
+        loginError.classList.remove('hidden');
+      }
+    });
+    
+    logoutBtn.addEventListener('click', logout);
+    
+    // ==========================================
+    // TABS
+    // ==========================================
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        
+        tabBtns.forEach(b => {
+          b.classList.remove('text-brand-light', 'border-brand-primary');
+          b.classList.add('text-brand-muted', 'border-transparent');
+        });
+        btn.classList.add('text-brand-light', 'border-brand-primary');
+        btn.classList.remove('text-brand-muted', 'border-transparent');
+        
+        tabContents.forEach(c => c.classList.add('hidden'));
+        document.getElementById(tab + 'Tab').classList.remove('hidden');
+      });
+    });
+    
+    // ==========================================
+    // CALENDAR
+    // ==========================================
+    let bookedDates = [];
+    let lastAvailableDates = [];
+    let displayMonth = new Date().getMonth();
+    let displayYear = new Date().getFullYear();
+    let selectedDate = null;
+    
+    const monthNames = ['Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни', 'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'];
+    
+    async function loadDates() {
+      try {
+        const data = await api('/dates');
+        bookedDates = data.bookedDates || [];
+        lastAvailableDates = data.lastAvailableDates || [];
+        renderAdminCalendar();
+        updateStats();
+      } catch (e) {
+        console.error('Failed to load dates:', e);
+      }
+    }
+    
+    function formatDate(year, month, day) {
+      return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    }
+    
+    function renderAdminCalendar() {
+      const grid = document.getElementById('adminCalendarGrid');
+      grid.innerHTML = '';
+      document.getElementById('adminCurrentMonth').textContent = `${monthNames[displayMonth]} ${displayYear}`;
+      
+      const firstDay = new Date(displayYear, displayMonth, 1).getDay();
+      const startDay = firstDay === 0 ? 6 : firstDay - 1;
+      const daysInMonth = new Date(displayYear, displayMonth + 1, 0).getDate();
+      
+      for (let i = 0; i < startDay; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.className = 'aspect-square';
+        grid.appendChild(emptyCell);
+      }
+      
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = formatDate(displayYear, displayMonth, day);
+        const cell = document.createElement('div');
+        
+        const isBooked = bookedDates.includes(dateStr);
+        const isLastAvailable = lastAvailableDates.includes(dateStr);
+        const isSelected = selectedDate === dateStr;
+        
+        let statusIndicator = '';
+        let bgClass = '';
+        
+        if (isBooked) {
+          statusIndicator = '<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-red-500"></span>';
+          bgClass = 'bg-red-500/10';
+        } else if (isLastAvailable) {
+          statusIndicator = '<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-brand-primary"></span>';
+          bgClass = 'bg-brand-primary/10';
+        } else {
+          const date = new Date(displayYear, displayMonth, day);
+          const dayOfWeek = date.getDay();
+          if (dayOfWeek === 0 || dayOfWeek === 6) {
+            statusIndicator = '<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-green-500"></span>';
+          }
+        }
+        
+        const selectedClass = isSelected ? 'ring-2 ring-brand-primary' : '';
+        
+        cell.className = `aspect-square flex items-center justify-center relative rounded-lg cursor-pointer hover:bg-white/10 transition-colors ${bgClass} ${selectedClass}`;
+        cell.innerHTML = `<span class="text-brand-light">${day}</span>${statusIndicator}`;
+        
+        cell.addEventListener('click', () => selectDate(dateStr, day));
+        
+        grid.appendChild(cell);
+      }
+    }
+    
+    function selectDate(dateStr, day) {
+      selectedDate = dateStr;
+      document.getElementById('selectedDateDisplay').innerHTML = `<span class="text-2xl font-bold text-brand-light">${day}</span><br><span class="text-brand-muted">${monthNames[displayMonth]} ${displayYear}</span>`;
+      document.getElementById('dateControls').classList.remove('hidden');
+      renderAdminCalendar();
+    }
+    
+    document.getElementById('adminPrevMonth').addEventListener('click', () => {
+      displayMonth--;
+      if (displayMonth < 0) { displayMonth = 11; displayYear--; }
+      renderAdminCalendar();
+    });
+    
+    document.getElementById('adminNextMonth').addEventListener('click', () => {
+      displayMonth++;
+      if (displayMonth > 11) { displayMonth = 0; displayYear++; }
+      renderAdminCalendar();
+    });
+    
+    document.getElementById('setFree').addEventListener('click', async () => {
+      if (!selectedDate) return;
+      try {
+        await api(`/dates/${selectedDate}`, { method: 'DELETE' });
+        await loadDates();
+      } catch (e) {
+        console.error('Failed to set date free:', e);
+      }
+    });
+    
+    document.getElementById('setBooked').addEventListener('click', async () => {
+      if (!selectedDate) return;
+      try {
+        await api('/dates', {
+          method: 'POST',
+          body: JSON.stringify({ date: selectedDate, status: 'booked' })
+        });
+        await loadDates();
+      } catch (e) {
+        console.error('Failed to set date booked:', e);
+      }
+    });
+    
+    document.getElementById('setLastAvailable').addEventListener('click', async () => {
+      if (!selectedDate) return;
+      try {
+        await api('/dates', {
+          method: 'POST',
+          body: JSON.stringify({ date: selectedDate, status: 'last_available' })
+        });
+        await loadDates();
+      } catch (e) {
+        console.error('Failed to set date last available:', e);
+      }
+    });
+    
+    function updateStats() {
+      document.getElementById('bookedCount').textContent = bookedDates.length;
+      document.getElementById('lastAvailableCount').textContent = lastAvailableDates.length;
+    }
+    
+    // ==========================================
+    // PHOTOS
+    // ==========================================
+    let photos = [];
+    
+    async function loadPhotos() {
+      try {
+        photos = await api('/photos');
+        renderPhotos();
+      } catch (e) {
+        console.error('Failed to load photos:', e);
+      }
+    }
+    
+    function renderPhotos() {
+      const grid = document.getElementById('photoGrid');
+      const noMsg = document.getElementById('noPhotosMsg');
+      
+      grid.innerHTML = '';
+      
+      if (photos.length === 0) {
+        noMsg.classList.remove('hidden');
+        return;
+      }
+      
+      noMsg.classList.add('hidden');
+      
+      photos.forEach(photo => {
+        const div = document.createElement('div');
+        div.className = 'relative group';
+        
+        // Handle both relative and absolute URLs
+        const imgUrl = photo.url.startsWith('http') ? photo.url : `${API_URL}${photo.url}`;
+        
+        div.innerHTML = `
+          <img src="${imgUrl}" alt="${photo.alt_text || 'Photo'}" class="w-full aspect-square object-cover rounded-xl">
+          <button class="delete-photo absolute top-2 right-2 w-8 h-8 rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center" data-id="${photo.id}">
+            ✕
+          </button>
+        `;
+        grid.appendChild(div);
+      });
+      
+      document.querySelectorAll('.delete-photo').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (confirm('Изтрий тази снимка?')) {
+            try {
+              await api(`/photos/${btn.dataset.id}`, { method: 'DELETE' });
+              await loadPhotos();
+            } catch (e) {
+              console.error('Failed to delete photo:', e);
+            }
+          }
+        });
+      });
+    }
+    
+    document.getElementById('uploadPhotoBtn').addEventListener('click', async () => {
+      const fileInput = document.getElementById('photoFileInput');
+      const file = fileInput.files[0];
+      
+      if (!file) {
+        alert('Изберете файл');
+        return;
+      }
+      
+      const formData = new FormData();
+      formData.append('photo', file);
+      
+      try {
+        const response = await fetch(`${API_URL}/api/photos/upload`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          },
+          body: formData
+        });
+        
+        if (response.ok) {
+          fileInput.value = '';
+          await loadPhotos();
+        } else {
+          alert('Грешка при качване');
+        }
+      } catch (e) {
+        console.error('Upload failed:', e);
+        alert('Грешка при качване');
+      }
+    });
+    
+    document.getElementById('addPhotoUrlBtn').addEventListener('click', async () => {
+      const url = document.getElementById('photoUrlInput').value.trim();
+      
+      if (!url) {
+        alert('Въведете URL');
+        return;
+      }
+      
+      try {
+        await api('/photos/url', {
+          method: 'POST',
+          body: JSON.stringify({ url })
+        });
+        document.getElementById('photoUrlInput').value = '';
+        await loadPhotos();
+      } catch (e) {
+        console.error('Add photo URL failed:', e);
+        alert('Грешка при добавяне');
+      }
+    });
+    
+    // ==========================================
+    // MESSAGES
+    // ==========================================
+    async function loadMessages() {
+      try {
+        const data = await api('/contact');
+        renderMessages(data.submissions || []);
+        
+        if (data.unreadCount > 0) {
+          document.getElementById('unreadBadge').textContent = data.unreadCount;
+          document.getElementById('unreadBadge').classList.remove('hidden');
+        }
+      } catch (e) {
+        console.error('Failed to load messages:', e);
+      }
+    }
+    
+    function renderMessages(messages) {
+      const list = document.getElementById('messagesList');
+      const noMsg = document.getElementById('noMessagesMsg');
+      
+      list.innerHTML = '';
+      
+      if (messages.length === 0) {
+        noMsg.classList.remove('hidden');
+        return;
+      }
+      
+      noMsg.classList.add('hidden');
+      
+      messages.forEach(msg => {
+        const div = document.createElement('div');
+        div.className = `p-4 rounded-xl border ${msg.read ? 'bg-brand-dark border-white/10' : 'bg-brand-primary/10 border-brand-primary/30'}`;
+        div.innerHTML = `
+          <div class="flex justify-between items-start mb-2">
+            <div>
+              <span class="font-semibold text-brand-light">${msg.name}</span>
+              ${!msg.read ? '<span class="ml-2 px-2 py-0.5 bg-brand-primary text-brand-dark text-xs rounded-full">Ново</span>' : ''}
+            </div>
+            <span class="text-brand-muted text-sm">${new Date(msg.created_at).toLocaleDateString('bg-BG')}</span>
+          </div>
+          <p class="text-brand-muted text-sm mb-2">
+            <a href="mailto:${msg.email}" class="text-brand-primary hover:underline">${msg.email}</a>
+            ${msg.phone ? ` • <a href="tel:${msg.phone}" class="text-brand-primary hover:underline">${msg.phone}</a>` : ''}
+          </p>
+          ${msg.wedding_date ? `<p class="text-brand-muted text-sm mb-2">📅 Дата: ${msg.wedding_date}</p>` : ''}
+          ${msg.message ? `<p class="text-brand-light mt-2">${msg.message}</p>` : ''}
+          <div class="flex gap-2 mt-3">
+            ${!msg.read ? `<button class="mark-read px-3 py-1 text-sm bg-green-500/20 text-green-400 rounded hover:bg-green-500/30" data-id="${msg.id}">Маркирай като прочетено</button>` : ''}
+            <button class="delete-msg px-3 py-1 text-sm bg-red-500/20 text-red-400 rounded hover:bg-red-500/30" data-id="${msg.id}">Изтрий</button>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+      
+      document.querySelectorAll('.mark-read').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          try {
+            await api(`/contact/${btn.dataset.id}/read`, { method: 'PUT' });
+            await loadMessages();
+          } catch (e) {
+            console.error('Failed to mark as read:', e);
+          }
+        });
+      });
+      
+      document.querySelectorAll('.delete-msg').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (confirm('Изтрий това съобщение?')) {
+            try {
+              await api(`/contact/${btn.dataset.id}`, { method: 'DELETE' });
+              await loadMessages();
+            } catch (e) {
+              console.error('Failed to delete message:', e);
+            }
+          }
+        });
+      });
+    }
+    
+    // ==========================================
+    // CHANGE PASSWORD
+    // ==========================================
+    document.getElementById('changePasswordForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const currentPassword = document.getElementById('currentPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      
+      try {
+        await api('/auth/change-password', {
+          method: 'POST',
+          body: JSON.stringify({ currentPassword, newPassword })
+        });
+        alert('Паролата е променена успешно!');
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newPassword').value = '';
+      } catch (e) {
+        alert('Грешка при смяна на паролата');
+      }
+    });
+    
+    // ==========================================
+    // INIT
+    // ==========================================
+    init();
+  </script>
+</body>
+</html>
